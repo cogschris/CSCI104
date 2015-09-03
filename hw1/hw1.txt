@@ -43,4 +43,4 @@ Homework Problem 2:
 		2) git log -p -3
 
 	Part c:
-		Running "git commit" will take all the added files, staged for committing, and update them in the repository history. This can be seen in the git log when you open it.
+		Running "git commit" will take all the added files, staged for committing, and update them in the repository history. This can be seen in the git log when you open it. It will prompt you for a message.
