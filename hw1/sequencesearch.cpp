@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
     text.close();
 
     int longestchain = 0;
-    int counter = 1;
+    int counter = 0;
 
     //for loop to search rows left to right
     for (int n = 0; n < row; n++) {
