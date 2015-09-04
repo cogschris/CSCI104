@@ -43,3 +43,11 @@ Homework Problem 2:
 
 	Part c:
 		Running "git commit" will take all the added files, staged for committing, and update them in the repository history. This can be seen in the git log when you open it. It will prompt you for a message.
+
+
+Homework Problem 4:
+	- A string of letters or blank is a correct parenthetical expression
+
+	- Every '(' or '[' needs to be paired with the next ']' or ')' respectively
+
+	- if s is a string of letters or is blank, then [s] or (s) is a correct parenthetical expression

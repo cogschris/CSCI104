@@ -1,3 +1,12 @@
+/*
+Skeleton code provided by CS104
+Author: Chris Cognetta
+email: ccognett@usc.edu
+
+This program is designed to take an input of letters and a certain size and then make as many
+palindrome combinations as possible.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -9,13 +18,16 @@ void makePalindromeHelper(ostream& ofile, char* options, int len, int size, stri
 
 
 void makePalindromes(ostream& ofile, char* options, int size) {
-	int terms = strlen(options);
-	string temp;
+	int terms = strlen(options); //get the amount of terms to work with
+	string temp; //temporary string to hold semicombined terms
 	for (int i = 0; i < terms; i++) {
 		temp = options[i];
 		makePalindromeHelper(ofile, options, terms, size, temp);
+		//so call palindrome helper on one letter to make all the odd number palindromes
+
 		temp = temp + options[i];
 		makePalindromeHelper(ofile, options, terms, size, temp);
+		//call palindrome helper on two letters to make all the even sets
 	}
 	//makePalindromes(ofile, options, --size);
 
@@ -24,10 +36,15 @@ void makePalindromes(ostream& ofile, char* options, int size) {
 void makePalindromeHelper(ostream& ofile, char* options, int len, int size, string pal) {
 	string temp;
 	ofile << pal << endl;
+	//print out the string already, which is already symmetrical
+
 	if (pal.length() < size - 1) {
 		for (int i = 0; i < len; i++) {
 			temp = options[i] + pal + options[i];
+			//bascially follow xPx and add two of the same letters to the string
+
 			makePalindromeHelper(ofile, options, len, size, temp); 
+			//call it again on a bigger palindrome
 		}
 	}
 
