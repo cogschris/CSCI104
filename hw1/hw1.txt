@@ -23,8 +23,7 @@ Homework Problem 1:
 
 	Part d:
 	After making a late submission by pushing your code to GitHub you should:
-		2) Complete the online late submission form.
-		3) AND probably start the next homework sooner (added benefit) 
+		2) Complete the online late submission form. 
 
 	Part e:
 	Is there a grace period to submit assignments?:

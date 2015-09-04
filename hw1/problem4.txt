@@ -1,0 +1,7 @@
+Problem 4:
+
+- A string of letters or blank is a correct parenthetical expression
+
+- Every '(' or '[' needs to be paired with the next ']' or ')' respectively
+
+- if s is a string of letters or is blank, then [s] or (s) is a correct parenthetical expression
