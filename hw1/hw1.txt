@@ -8,7 +8,7 @@ Homework Problem 1:
 		1) Looking up information relevant to the course online as long as the information is not copied from another person's code published online.
 		3) Talking to students about problems to solve them rather than just asking for answers.
 		5) Asking the course staff for help.
-		7) Sharing code with another student is alright provided they just want to see the concepts and do something substantial afterwards as to not directly copy your own work. 
+		6) Sitting next to my classmate and coding together as a team or with significant conversation about approach. (Be sure to use the Hearthstone rule) 
 
 	Part b:
 	Recommended ways of writing code include:
@@ -23,7 +23,8 @@ Homework Problem 1:
 
 	Part d:
 	After making a late submission by pushing your code to GitHub you should:
-		2) Complete the online late submission form. 
+		2) Complete the online late submission form.
+		3) Start the next homework early (just an added benefit, not really specified in the website) 
 
 	Part e:
 	Is there a grace period to submit assignments?:
@@ -42,7 +43,7 @@ Homework Problem 2:
 		2) git log -p -3
 
 	Part c:
-		Running "git commit" will take all the added files, staged for committing, and update them in the repository history. This can be seen in the git log when you open it. It will prompt you for a message.
+		Running "git commit" will open up a window for you to add a message and then will take all the added files, staged for committing, and update them in the repository history. This can be seen in the git log when you open it.
 
 
 Homework Problem 4:
@@ -50,4 +51,4 @@ Homework Problem 4:
 
 	- Every '(' or '[' needs to be paired with the next ']' or ')' respectively
 
-	- if s is a string of letters or is blank, then [s] or (s) is a correct parenthetical expression
+	- if s is a string terms, then [s] or (s) is a correct parenthetical expression
