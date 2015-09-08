@@ -1,0 +1,28 @@
+Problem 1:
+	Part a): The README file is currently unmodified.
+
+	Part b): The README file is now modified, and the fun_problem.txt is untracked.
+
+	Part c): The README file and the fun_problem.txt file are staged.
+
+	Part d): The README file and the fun_problem.txt file are modified at this point
+
+	Part e): The README file is staged and the fun_problem.txt is modified. fun_problem.txt reads "So far, so good"
+
+	Part f): The README file is now modified. We got to this point becasue it was unmodified and already committed but then a line of text was added to the end of it so it is modified. 
+
+
+Problem 3:
+	Part a): The runtime of the function is O(n^2)
+
+	Part b): 
+
+	Part c):
+
+
+Problem 4:
+	1) A character list would be suitable for the web page because it stores all the words in the order they appear and can replay it in that order
+
+	2) A map with student ID as the key would be suitable for the class list, because you can enter each ID and see all their classes, but also can enter a class and see all the student ID's who have that class.
+
+	3) A string list that stores all the names of the countries in the order that they will appear will be the best.
