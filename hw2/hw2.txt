@@ -7,17 +7,17 @@ Problem 1:
 
 	Part d): The README file and the fun_problem.txt file are modified at this point
 
-	Part e): The README file is staged and the fun_problem.txt is modified. fun_problem.txt reads "So far, so good"
+	Part e): The README file is staged and the fun_problem.txt is unmodified. fun_problem.txt reads "So far, so good"
 
 	Part f): The README file is now modified. We got to this point becasue it was unmodified and already committed but then a line of text was added to the end of it so it is modified. 
 
 
 Problem 3:
-	Part a): The runtime of the function is O(n^2)
+	Part a): The runtime of the function is O(n^(3/2)) because there are two nested for loops which run at n for each, but the inner for loop will only run when the if statment is verified. testing values for 9, 16, and 25, the inner for loop only runs for 3, 4, and 5 times respectivly, which are the square roots of n. Therefore the inner for loop only runs about sqrt(n). n * sqrt(n) is n^(3/2)
 
-	Part b): 
+	Part b): O((3/2)^n * n)
 
-	Part c):
+	Part c): O(n^2 + n^3/2) // n^3/2
 
 
 Problem 4:
@@ -25,4 +25,4 @@ Problem 4:
 
 	2) A map with student ID as the key would be suitable for the class list, because you can enter each ID and see all their classes, but also can enter a class and see all the student ID's who have that class.
 
-	3) A string list that stores all the names of the countries in the order that they will appear will be the best.
+	3) A string list that has a pointer to next that stores all the names of the countries in the order that they will appear will be the best. 
