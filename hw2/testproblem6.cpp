@@ -15,13 +15,16 @@ int main() {
 	list -> insert(0, 14);
 	list -> insert(1, 12);
 	list -> insert(0, 35);
+	list -> insert(3, 1);
 
 	cout << "The value at 0 is " << list -> get(0) <<endl;
 	cout << "And the value at 1 is " << list -> get(1) << endl;
+	cout << "Finally at 3 is " << list -> get(3) << endl;
 
 	list -> remove(0);
 	cout << "The value at 0 is now " << list -> get(0) << endl;
 	cout << "And the size of the list is " << list -> size() << endl;
+	cout << "See? Everything moved up, like how 2 is now " << list -> get(2) << endl;
 
 	list -> set(0, 120);
 	cout << "The value at 0 has now changed to " << list -> get(0) << endl;
@@ -50,7 +53,7 @@ int main() {
 		cout << "Oops my code is definetely broken if you are reading this" << endl;
 	}
 	
-
+	delete list;
 
 	return 0;
 }

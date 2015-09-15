@@ -27,7 +27,7 @@ int LListInt::size() const
 /**
  * Complete the following function
  */
-void LListInt::insert(int loc, const int& vals)
+void LListInt::insert(int loc, const int& val)
 {
   // as long as the size is A okay
   if (loc >= 0 && loc <= size_) {
@@ -35,7 +35,7 @@ void LListInt::insert(int loc, const int& vals)
     //if this is the first of the list, set that value equal to head and tail
     if (size_ == 0) {
       Item *value = new Item;
-      value -> val = vals;
+      value -> val = val;
       
       head_ = value;
       tail_ = value;
@@ -45,7 +45,7 @@ void LListInt::insert(int loc, const int& vals)
     //adding to the beginning of the list changes just head
     else if (loc == 0) {
       Item *value = new Item;
-      value -> val = vals;
+      value -> val = val;
       Item *temp = head_;
       value -> next = temp;
       head_ = value;
@@ -55,7 +55,7 @@ void LListInt::insert(int loc, const int& vals)
     //adding to the end of the list changes just tail
     else if (loc == size_){
       Item *value = new Item;
-      value -> val = vals;
+      value -> val = val;
       Item *temp = tail_;
       temp -> next = value;
       tail_ = value;
@@ -73,7 +73,7 @@ void LListInt::insert(int loc, const int& vals)
       if (ins-> next != NULL) {
         Item *temp = ins -> prev;
         Item *value = new Item;
-        value -> val = vals;
+        value -> val = val;
         ins -> prev = value;
         value -> next = ins;
         temp -> next = value;
@@ -173,7 +173,10 @@ void LListInt::clear()
 LListInt::Item* LListInt::getNodeAt(int loc) const
 {
   //follow good size
-  if (loc >= 0 && loc <= size_) {
+  
+    if(loc < 0 || loc >= size_){
+    throw std::invalid_argument("bad location");
+  }
     Item *check = head_;
     //use for loop to search through to find the right one
     for (int i = 0; i < loc; i++) {
@@ -181,6 +184,5 @@ LListInt::Item* LListInt::getNodeAt(int loc) const
     }
     //return the value
     return check;
-  }
-
+  
 }
