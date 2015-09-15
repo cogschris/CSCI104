@@ -15,9 +15,9 @@ Problem 1:
 Problem 3:
 	Part a): The runtime of the function is O(n^(3/2)) because there are two nested for loops which run at n for each, but the inner for loop will only run when the if statment is verified. testing values for 9, 16, and 25, the inner for loop only runs for 3, 4, and 5 times respectivly, which are the square roots of n. Therefore the inner for loop only runs about sqrt(n). n * sqrt(n) is n^(3/2)
 
-	Part b): O((3/2)^n * n)
+	Part b): The runtim is O(n). So upon analyzing the code, it can be observed that the inner loop increases at a relationship of (3/2)^x * 10 every time the if loop passes. To find how often that happens, that function is set equal to n = (3/2)^x * 10 where we try to solve for x. That yields x = (base 3/2)log(n/10). This now represents the final place to where our sum of runtime will go until depending on input n. We put this into sum notation and because it is a geometric series of (3/2)^x (we factor 10) we use the identidy and achieve ((3/2 ^ ((base 3/2)log(n/10))) - 1)/(3/2 - 1) but since we are taking the asymptotic runtime and the log cancels out, we are left with just n.
 
-	Part c): O(n^2 + n^3/2) // n^3/2
+	Part c): The runtime is O(n^3/2). Similar to b, I searched for the relationship of the inner loop depending on how often it was accessed. The loop was accessed 10 + xn^(1/2). Like above, to find the value of x for n input, we set them equal to each other n = 10 + xn^(1/2). Solving for x yields n^(1/2) and solving for n yields x^2 (we sum the x in our summation, up to the n value). So now we have an arithmetic sum that goes up until n^(1/2) of x^2. Using the relationship for the sum, O(i^p) = O(n^p+1), the function goes from x^2 to (n^(1/2))^(1 + 2) = n^(3/2).
 
 
 Problem 4:
