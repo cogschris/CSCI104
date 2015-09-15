@@ -23,21 +23,42 @@ int main(int argc, char* argv[]) {
 	myfile.open(argv[1]);
 
 	string temp;
+	string load;
 
 	//load everything in the set
 	while (!myfile.eof()) {
-		myfile >> temp;
-		
+		getline(myfile, temp);
+		cout << temp << endl;
+		load.clear();
+		//int j = 0;
 		//change everything to lowercase
-		for(int i = 0; temp[i] != '\0'; i++) {
-			if (temp[i] > 64 && temp[i] < 91) {
-				temp[i] += 32;
+		for(size_t i = 0; i <= temp.size(); i++) {
+			if (isalpha(temp[i])) {
+						//cout << temp[i] << endl;
+
+				if ((int)temp[i] > 64 && (int)temp[i] < 91) {
+					temp[i] = temp[i] + 32;
+					load = load + temp[i];
+				}
+				else {
+					load = load + temp[i];
+				}
+				//cout << load << endl;
+				//j++;
 			}
+
+			else {
+				//j = 0;
+				//cout << load[0] << endl;
+				words.insert(load);
+				load.clear();
+
+			}
+
+		
 		}
-
-		words.insert(temp);
+		//words.insert(load);
 	}
-
 	
 	//prompt user for word to seach
 	string test;
