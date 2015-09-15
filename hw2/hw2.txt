@@ -21,8 +21,8 @@ Problem 3:
 
 
 Problem 4:
-	1) A character list would be suitable for the web page because it stores all the words in the order they appear and can replay it in that order
+	1) A character set would be suitable for the web page because it stores all the words in the order they appear and can replay it in that order
 
-	2) A map with student ID as the key would be suitable for the class list, because you can enter each ID and see all their classes, but also can enter a class and see all the student ID's who have that class.
+	2) A map with student ID as the key would be suitable for the class list, because you can enter each ID and see all their classes, but also can enter a string of a class and see all the student ID's who have that class in their map designation.
 
 	3) A string list that has a pointer to next that stores all the names of the countries in the order that they will appear will be the best. 
