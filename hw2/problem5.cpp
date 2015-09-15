@@ -24,28 +24,42 @@ void split (Node*& in, Node*& smaller, Node*& larger, int pivot);
 void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
 	
 	//as long as we arent loaing a null
-	if (in != NULL) {
+	if (in == NULL) {
+		return;
+	}
 		//if the value is smaller
 		if (in -> value <= pivot) {
+			if (smaller == NULL) {
+				smaller = in;
+				smaller -> next = NULL;
+			}
+			else {
 				smaller -> next = in; //load the value as the next
 				smaller = smaller -> next; //move forward
 				in = in -> next; //move forward
 				smaller -> next= NULL; //delete the pointer to the rest of the list
-				
+			}
 		}
 		//just follows the same premise
 		else if (in -> value > pivot) {
+			if (larger == NULL) {
+				larger = in;
+				larger -> next = NULL;
+			}
+			else {
 				larger -> next = in;
 				larger = larger -> next;
-				//in = NULL;
+				
 				in = in -> next;
 				larger -> next = NULL;
+			}
 		}
 			
 		
 			split(in, smaller, larger, pivot); //run the recursion again
-		}
+		
 }
+/* This was just my test code
 
 int main() {
 
@@ -60,10 +74,12 @@ int main() {
 	}
 
 	Node *startsmall = new Node;
-	Node *startlarge = new Node;
 	startsmall -> value = 0;
-	Node *temps = startsmall;
+	Node *startlarge = new Node;
 	startlarge -> value = 10;
+	//startsmall   = NULL;
+	Node *temps = startsmall;
+	//startlarge = NULL;
 	Node *templ = startlarge;
 
 	split(place, temps, templ, 5);
@@ -89,4 +105,4 @@ int main() {
 	cout << endl;
 	return 1;
 }
-
+*/
