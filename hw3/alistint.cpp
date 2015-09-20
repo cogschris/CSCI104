@@ -25,11 +25,8 @@ AListInt::AListInt(const AListInt& other)
 /////work on this!!
 AListInt::AListInt& operator=(const AListInt& other)
 {
-	if (this != &other) {
-		if (_cap >= other._cap()) {
-			delete[] _data;
-
-		}
+	for (int i = 0; i < other.size(); i++) {
+		_data[i] = other._data[i];
 	}
 }
 
@@ -86,7 +83,7 @@ void AListInt::set(int pos, const int& val)
 	}
 }
 
-int AListInt::get(int position) const
+int& AListInt::get(int position) const
 {
 	if (position < _size && position >= 0) {
 		return _data[position];
@@ -94,4 +91,46 @@ int AListInt::get(int position) const
 	return;
 }
 
+int const & AListInt::get(int position) const
+{
+	if (position < _size && position >= 0) {
+		return _data[position];
+	}
+	return;
+}
 
+int& AListInt::operator+(const AListInt& other) const
+{
+	int new temp[_size];
+	temp = _data;
+	int bigger = _size + other._size()
+	int i = _size;
+	while (_cap < bigger) {
+		resize();
+	}
+	while (i < bigger) {
+		_data[i] = other[i - _size];
+	}
+
+	_size = bigger;
+}
+
+int const & AListInt::operator[](int positon) const
+{
+	return _data[positon];
+}
+
+int& AListInt::operator[](int position)
+{
+	return _data[position];
+}
+
+
+void AListInt::resize()
+{
+	new temp[cap];
+	_cap = _cap * 2;
+	delete[] _data;
+	new _data[cap] = temp;
+	delete[] temp;
+}
