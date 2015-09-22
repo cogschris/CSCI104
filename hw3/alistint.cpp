@@ -90,7 +90,9 @@ void AListInt::remove(int pos)
 
 		//unsigned int temp = (int)(_size) - 1;
 		//delete _data[temp];
-		_size--;
+		if (_size != 0) {
+			_size--;
+		}
 	}
 }
 
@@ -119,18 +121,22 @@ int const & AListInt::get(int position) const
 
 AListInt AListInt::operator+(const AListInt& other) const
 {
-	int size = _size + other._size;
+	unsigned int size = _size + other._size;
 	AListInt temp(size);
-	cout << size << " LLOOOK AT ME" << endl;
-	temp._size = size;
-	temp._data = _data;
-	int i = _size;
-	//int size = _size + other._size;
 	
+	temp._size = size;
+	//temp._data = _data;
+	int i = 0;
+	//int size = _size + other._size;
+	while ((unsigned int)(i) < _size) {
+		temp._data[i] = _data[i];
+		i++;
+	}
 	
 
-	while (i < size) {
+	while ((unsigned int)(i) < size) {
 		temp[i] = other[i - _size];
+		i++;
 	}
 
 	//_size = (unsigned int)(bigger);
@@ -167,7 +173,7 @@ void AListInt::resize()
 	delete[] temp;
 	
 }
-
+/*
 int main() {
 	
 	AListInt list;
@@ -176,7 +182,7 @@ int main() {
 	list.insert(0, 5);
 	list.insert(0, 4);
 
-	cout << "list.get(0) " << list.get(0) << endl << "list.get(1) " << list.get(1) << endl;
+	//cout << "list.get(0) " << list.get(0) << endl << "list.get(1) " << list.get(1) << endl;
 
 	list.insert(2, 1);
 	
@@ -188,7 +194,7 @@ int main() {
 	list.insert(5, 6);
 	
 
-	cout << list.get(5) << endl;
+	//cout << list.get(5) << endl;
 
 	cout << list.get(0) << " " << list.get(1) << endl;
 	list.remove(0);
@@ -197,8 +203,9 @@ int main() {
 	cool.insert(0, 1);
 	cool.insert(1, 8);
 
-	list = list + cool;
-	cout << list.get(6) << " " << list.get(7) << endl;
+	AListInt darn;
+	darn = list + cool;
+	cout << darn.get(5) << " " << darn.get(6) << endl;
 
 
-}
+} */
