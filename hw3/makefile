@@ -12,9 +12,12 @@ $(BIN_DIR)/alisttest: alisttest.cpp $(BIN_DIR)/alistint.o $(BIN_DIR)/.dirstamp
 $(BIN_DIR)/alistint.o: alistint.o $(BIN_DIR)/.dirstamp
 	$(CC) $(CPPFLAGS) -c alistint.cpp -o $(BIN_DIR)/alistint.o
 
-.PHONY: tests
+.PHONY: clean
 
-alisttests: $(BIN_DIR)/alisttest
+clean:
+	rm -rf $(BIN_DIR)
+
+alisttest: $(BIN_DIR)/alisttest
 	-@$(BIN_DIR)/alisttest
 	-@echo "--- All Tested!---"
 
