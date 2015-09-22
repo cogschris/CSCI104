@@ -1,0 +1,9 @@
+Problem 4:
+	
+	a) O(1) because the runtime of inserting is always going to be O(n) but the runtime of adding the new array is O(n + 10). Adding the two together yields 2n + 10 which simplifies to n. Divided by n inputs yields 1
+
+	b) Again the runtime of each individual insertion is O(n) because it is a constant runtime. However adding the new array size is now O(n^1/2)
+
+	c) Similar to part A, the amortized runtime is O(1) because popping is always going to be O(n) and resizing is going to be 2n -2, which again simplifies to n. Adding the two yields 2n which is divided by the input n to yield a runtim of 2 or simplies to O(1)
+
+	d) The runtime is still the same O(1) because push and pop have each O(n) but the other two have the same runtime of 2n - 2 and n + 1 and adding them all together simplifies down to O(1)

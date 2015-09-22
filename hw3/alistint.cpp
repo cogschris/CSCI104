@@ -1,38 +1,55 @@
+#include <iostream>
 #include "alistint.h"
+#include <cstdlib>
+#include <stdexcept>
 
+using namespace std;
 
 AListInt::AListInt()
 {
 	_size = 0;
 	_cap = 5;
-	*_data[5];
+	_data = new int[5];
 }
 
 AListInt::AListInt(int cap) 
 {
 	_size = 0;
 	_cap = cap;
+	_data = new int[cap];
 }
 
 AListInt::AListInt(const AListInt& other)
 {
-	for (int i =0; i < _size; i++) {
-		other[i] = _data[i];
+	_cap = other._cap;
+	_size = other._size;
+	_data = new int[_cap];	
+	for (unsigned int i = 0; i < _size; i++) {
+
+		_data[i] = other._data[i];
 	}
+	
 }
 
 
 /////work on this!!
-AListInt::AListInt& operator=(const AListInt& other)
+AListInt& AListInt::operator=(const AListInt& other)
 {
-	for (int i = 0; i < other.size(); i++) {
+	delete[] _data;
+	_cap = other._cap;
+	_size = other._size;
+	_data = new int[_cap];	
+	for (unsigned int i = 0; i < _size; i++) {
+
 		_data[i] = other._data[i];
 	}
+
+	return *this;
 }
 
 AListInt::~AListInt()
 {
-	clear();
+	delete[] _data;
 }
 
 int AListInt::size() const
@@ -50,8 +67,8 @@ bool AListInt::empty() const
 
 void AListInt::insert(int pos, const int& val)
 {
-	if (pos <= size && pos >= 0) {	
-		if (_size + 1 > _cap) {
+	if ((unsigned int)(pos) <= (_size) && pos >= 0) {	
+		if ((_size) + 1 > (_cap)) {
 			resize();
 		}
 
@@ -66,53 +83,59 @@ void AListInt::insert(int pos, const int& val)
 
 void AListInt::remove(int pos)
 {
-	if (pos < _size && pos >= 0) {
-		for (int i = pos; i < _size - 1; i++) {
+	if ((unsigned int)(pos) < _size && pos >= 0) {
+		for (int i = pos; i < (int)(_size) - 1; i++) {
 			_data[i] = _data[i+1];
 		}
 
-		_data[_size-1] = NULL;
+		//unsigned int temp = (int)(_size) - 1;
+		//delete _data[temp];
 		_size--;
 	}
 }
 
 void AListInt::set(int pos, const int& val) 
 {
-	if (pos < _size && pos >= 0) {
+	if ((unsigned int)(pos) < _size && pos >= 0) {
 		_data[pos] = val;
 	}
 }
 
-int& AListInt::get(int position) const
+int& AListInt::get(int position)
 {
-	if (position < _size && position >= 0) {
+	if ((unsigned int)(position) < _size && position >= 0) {
 		return _data[position];
 	}
-	return;
+	return _data[0];
 }
 
 int const & AListInt::get(int position) const
 {
-	if (position < _size && position >= 0) {
+	if ((unsigned int)(position) < _size && position >= 0) {
 		return _data[position];
 	}
-	return;
+	return _data[0];
 }
 
-int& AListInt::operator+(const AListInt& other) const
+AListInt AListInt::operator+(const AListInt& other) const
 {
-	int new temp[_size];
-	temp = _data;
-	int bigger = _size + other._size()
+	int size = _size + other._size;
+	AListInt temp(size);
+	cout << size << " LLOOOK AT ME" << endl;
+	temp._size = size;
+	temp._data = _data;
 	int i = _size;
-	while (_cap < bigger) {
-		resize();
-	}
-	while (i < bigger) {
-		_data[i] = other[i - _size];
+	//int size = _size + other._size;
+	
+	
+
+	while (i < size) {
+		temp[i] = other[i - _size];
 	}
 
-	_size = bigger;
+	//_size = (unsigned int)(bigger);
+
+	return temp;
 }
 
 int const & AListInt::operator[](int positon) const
@@ -128,9 +151,54 @@ int& AListInt::operator[](int position)
 
 void AListInt::resize()
 {
-	new temp[cap];
+	int* temp = new int[_size];
+	
 	_cap = _cap * 2;
+	for (unsigned int i = 0; i < _size; i++) {
+		temp[i] = _data[i];
+	}
 	delete[] _data;
-	new _data[cap] = temp;
+	_data = new int[_cap];
+
+	for (unsigned int i = 0; i < _size; i++) {
+		_data[i] = temp[i];
+	}
+
 	delete[] temp;
+	
+}
+
+int main() {
+	
+	AListInt list;
+	AListInt cool;
+
+	list.insert(0, 5);
+	list.insert(0, 4);
+
+	cout << "list.get(0) " << list.get(0) << endl << "list.get(1) " << list.get(1) << endl;
+
+	list.insert(2, 1);
+	
+
+	list.insert(3, 1);
+	
+	list.insert(2, 3);
+	
+	list.insert(5, 6);
+	
+
+	cout << list.get(5) << endl;
+
+	cout << list.get(0) << " " << list.get(1) << endl;
+	list.remove(0);
+	cout << list.get(0) << endl;
+
+	cool.insert(0, 1);
+	cool.insert(1, 8);
+
+	list = list + cool;
+	cout << list.get(6) << " " << list.get(7) << endl;
+
+
 }
