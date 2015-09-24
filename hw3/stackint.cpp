@@ -15,7 +15,8 @@ StackInt::~StackInt()
 }
 
 bool StackInt::empty() const
-{
+{	
+	//simple just access the places on allistint for all of these
 	return list_.empty();
 }
 
@@ -34,7 +35,7 @@ void StackInt::pop()
 	list_.remove((list_.size() - 1));
 }
 
-/*
+/* **Some random test I wrote :)
 int main() {
 	StackInt test;
 

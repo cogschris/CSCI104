@@ -7,6 +7,7 @@ using namespace std;
 
 AListInt::AListInt()
 {
+	//make the new constructor with new values
 	_size = 0;
 	_cap = 5;
 	_data = new int[5];
@@ -14,6 +15,7 @@ AListInt::AListInt()
 
 AListInt::AListInt(int cap) 
 {
+	//let the user pick the cap ;)
 	_size = 0;
 	_cap = cap;
 	_data = new int[cap];
@@ -21,6 +23,7 @@ AListInt::AListInt(int cap)
 
 AListInt::AListInt(const AListInt& other)
 {
+	//basically copy whatever the other copy had
 	_cap = other._cap;
 	_size = other._size;
 	_data = new int[_cap];	
@@ -32,9 +35,10 @@ AListInt::AListInt(const AListInt& other)
 }
 
 
-/////work on this!!
+
 AListInt& AListInt::operator=(const AListInt& other)
 {
+	
 	delete[] _data;
 	_cap = other._cap;
 	_size = other._size;
