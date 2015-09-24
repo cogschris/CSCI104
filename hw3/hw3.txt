@@ -1,9 +1,9 @@
 Problem 4:
 	
-	a) O(1) because the runtime of inserting is always going to be O(n) but the runtime of adding the new array is O(n + 10). Adding the two together yields 2n + 10 which simplifies to n. Divided by n inputs yields 1
+	a) O(n) because n + 1 represents the what happens when you resize, because you must copy and put in the new variable. So technically the runtime of filling up over again you add nine so its n + 10. Because you increase by 10 each time you run this, you take the average which is (n + 10) / 10. This simplifies to O(n).
 
-	b) Again the runtime of each individual insertion is O(n) because it is a constant runtime. However adding the new array size is now O(n^1/2)
+	b) O(n^(1/2)) because the runtime for filling each insertion is n(the original) + sqrt(n) (which is the amount you added). So to fill those new resize, you have n + n^(1/2). But since we only fill about n^(1/2), we take the average which results in (n + n^(1/2))/(n^(1/2)) which yields O(n^(1/2))
 
-	c) Similar to part A, the amortized runtime is O(1) because popping is always going to be O(n) and resizing is going to be 2n -2, which again simplifies to n. Adding the two yields 2n which is divided by the input n to yield a runtim of 2 or simplies to O(1)
+	c) O(n) because assuming you have an array of 100, and you are currently at 50. Popping would yield a runtime of n - 1 because you need to resize into a new array. Pushing back into the array would make it 50, so popping again would get n + 2 is the new resizing. Consiering we made about 3 different insertions, we combine (n - 1 + n + 2)/ 3 = O(n).
 
-	d) The runtime is still the same O(1) because push and pop have each O(n) but the other two have the same runtime of 2n - 2 and n + 1 and adding them all together simplifies down to O(1)
+	d) The runtime is  O(1) because push and pop when you push, your runtime (n + 1) and when you decrease, your runtime is (n/4 - 1). Also adding in the traversing that needs to be done, to go between resizing is (3/4)n. So taking the average ((n + 1) + (n/4 - 1) + 3n/4) / 3n/4  which yields O(1).
