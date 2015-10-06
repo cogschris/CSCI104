@@ -1,4 +1,5 @@
 #include "pageparser.h"
+#include "myset.h"
 #include <fstream>
 
 PageParser::~PageParser() {
