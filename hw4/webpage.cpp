@@ -1,6 +1,10 @@
 #include "myset.h"
+#include "webpage.h"
 #include <fstream>
+#include <string>
+#include <iostream>
 
+using namespace std;
 
 WebPage::WebPage() {}
 
@@ -32,7 +36,7 @@ void WebPage::add_incoming_link(WebPage* wp) {
 	inlink.insert(wp);
 }
 
-MySetWebpage WebPage::incoming_links() const {
+MySetWebPage WebPage::incoming_links() const {
 	return inlink;
 }
 
@@ -40,23 +44,23 @@ void WebPage::add_outgoing_link(WebPage* wp) {
 	outlink.insert(wp);
 }
 
-MySetWebpage WebPage::outgoing_links() const {
+MySetWebPage WebPage::outgoing_links() const {
 	return outlink;
 }
 
 std::ostream & operator<<(std::ostream & os, const WebPage & page) {
-	std::string parse;
-	std::string web;
-	std::string submit;
-	ofstream text;
-	text.open(title)
+	string parse;
+	string web;
+	//string submit;
+	ifstream text;
+	text.open(page.filename().c_str());
 	while(!text.eof()) {
-		getline(parse, text);
-		std::bool open = false;
+		getline(text, parse);
+		bool open = false;
 		//page >> parse;
-		std::int size = parse.size();
-		for (std::int i = 0; i < size; i++) {
-			if (parse[i] = '(') {
+		int size = parse.size();
+		for (int i = 0; i < size; i++) {
+			if (parse[i] == '(') {
 				open = true;
 			}
 
@@ -72,5 +76,5 @@ std::ostream & operator<<(std::ostream & os, const WebPage & page) {
 		}
 	}
 	text.close();
-	return submit;
+	return os;
 }

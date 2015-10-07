@@ -1,5 +1,5 @@
-#ifndef ELEM_PARSER_H
-#define ELEM_PARSER_H
+#ifndef MD_PARSER_H
+#define MD_PARSER_H
 
 #include <string>
 #include "myset.h"
@@ -12,7 +12,7 @@
 
 class MDPageParser {
  public:
-  ~MDPageParser() { }
+  ~MDPageParser();
 
   /** 
    * Parses a file and returns all unique words according
@@ -21,7 +21,7 @@ class MDPageParser {
    */
   void parse(std::string filename,
 		     MySetString& allWords,
-		     MySetString& allLinks) = 0;
+		     MySetString& allLinks);
 };
 
 #endif

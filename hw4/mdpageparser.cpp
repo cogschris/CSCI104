@@ -1,22 +1,26 @@
 #include "pageparser.h"
+#include "mdpageparser.h"
 #include "myset.h"
 #include <fstream>
+#include <string>
+#include <sstream>
+#include <iostream>
 
-PageParser::~PageParser() {
+using namespace std;
+
+MDPageParser::~MDPageParser() {
 
 }
 
-void PageParser::parse(std::string filename,
-		     MySetString& allWords,
-		     MySetString& allLinks) {
+void MDPageParser::parse(string filename, MySetString& allWords, MySetString& allLinks) {
 
-	ofstream text;
-	text.open(filename);
+	ifstream text;
+	text.open(filename.c_str());
 
 	string load;
 
 	while (!text.eof()) {
-		getline(load, text);
+		getline(text, load);
 		int size = load.size();
 		bool specialpunc = false;
 		string enter;
@@ -27,6 +31,9 @@ void PageParser::parse(std::string filename,
 		for (int i = 0; i < size; i++) {
 			//if its alpha, then pass into new string
 			if (isalpha(load[i])) {
+				if (load[i] < 91) {
+					load[i] = load[i] + 32;
+				}
 				enter = enter + load[i];
 
 				if (check == true) {
