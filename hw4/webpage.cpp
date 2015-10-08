@@ -25,7 +25,7 @@ std::string WebPage::filename() const {
 }
 
 void WebPage::all_words(const MySetString& words) {
-	unique.set_union(words);
+	unique = words;
 }
 
 MySetString WebPage::all_words() const {
