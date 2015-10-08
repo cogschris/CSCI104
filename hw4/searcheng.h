@@ -12,10 +12,8 @@ class SearchEng {
  public:
   SearchEng();
   ~SearchEng();
-  void add_parse_from_index_file(std::string index_file, 
-				 PageParser* parser);
-  void add_parse_page(std::string filename, 
-		      PageParser* parser);
+  void add_parse_from_index_file(std::string index_file, PageParser* parser);
+  void add_parse_page(std::string filename, PageParser* parser);
   MySetWebPage OR_function(std::string word, MySetWebPage compare);
   MySetWebPage AND_function(std::string word, MySetWebPage compare);
   MySetWebPage ONE_function(std::string word);

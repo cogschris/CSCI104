@@ -2,8 +2,6 @@ BIN_DIR = bin
 CXX = g++
 CPPFLAGS = -Wall -g
 
-all: $(BIN_DIR)/search
-	./$(BIN_DIR)/search
 
 $(BIN_DIR)/search: search.cpp $(BIN_DIR)/webpage.o $(BIN_DIR)/searcheng.o $(BIN_DIR)/myset.o $(BIN_DIR)/mdpageparser.o $(BIN_DIR)/.dirstamp
 	$(CXX) $(CPPFLAGS) $(BIN_DIR)/webpage.o $(BIN_DIR)/searcheng.o $(BIN_DIR)/myset.o $(BIN_DIR)/mdpageparser.o search.cpp -o $(BIN_DIR)/search
@@ -27,3 +25,6 @@ clean:
 $(BIN_DIR)/.dirstamp:
 	mkdir -p $(BIN_DIR)
 	touch $(BIN_DIR)/.dirstamps
+
+
+	

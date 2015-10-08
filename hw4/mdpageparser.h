@@ -10,7 +10,7 @@
  *  format such as MD or HTML)
  */
 
-class MDPageParser {
+class MDPageParser : public PageParser {
  public:
   ~MDPageParser();
 

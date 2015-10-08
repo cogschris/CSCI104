@@ -3,9 +3,13 @@
 #include <vector>
 #include <string>
 #include <sstream>
-
+#include <locale>
 #include "webpage.h"
 #include "searcheng.h"
+#include "myset.h"
+#include "mdpageparser.h"
+#include "pageparser.h"
+
 
 using namespace std;
 
@@ -21,8 +25,9 @@ int main(int argc, char* argv[])
   /****************   Add code to ***************************/
   /* Initialize your search engine and parse all the pages */
   SearchEng search;
-  MDPageParser parser;
-  search.add_parse_from_index_file(string(argv[1]), *parser);
+  PageParser* parser = new MDPageParser;
+  string index = argv[1];
+  search.add_parse_from_index_file(index, parser);
 
 
 
@@ -42,7 +47,7 @@ int main(int argc, char* argv[])
 
 
     int i = 0;
-    int words = 0;
+    //int words = 0;
     bool And = false;
     bool Or = false;
     string check;
@@ -55,10 +60,10 @@ int main(int argc, char* argv[])
       break;
     }
     istringstream stream (myline);
-    while(!stream.empty() && leave == false) {
+    while(stream >> operation && leave == false) {
 
       if (And == false && Or == false) {
-        stream >> operator;
+        stream >> operation;
       }
 
       if (operation == "AND") {
@@ -70,15 +75,18 @@ int main(int argc, char* argv[])
 
 
       if (And == false && Or == false) {
-        if (!stream.empty()) {
-          cout << "Since you did not add an AND or OR to your search, we can only search
-          for one item" << endl;
+        if (!(stream >> operation)) {
+          cout << "Since you did not add an AND or OR to your search, we can only search for one item" << endl;
           leave = true;
           // NEED TO GET OUT OF THIS ENTIRE THING NOW
         }
 
         else {
-          operation = tolower(operation);
+          for (int i = 0; i < int(operation.size()); i++) {
+            if (operation[i] < 92) {
+              operation[i] = operation[i] + 32;
+            }
+          }
           results = search.ONE_function(operation);
           display_results(results);
           leave = true;
@@ -88,17 +96,28 @@ int main(int argc, char* argv[])
 
       else if (And == true && Or == false) {
         results = search.ONE_function(operation);
-        while(!stream.empty()) {
-          stream >> added;
+        while(stream >> added) {
+          //stream >> added;
+          for (int i = 0; i < int(added.size()); i++) {
+            if (added[i] < 92) {
+              added[i] = added[i] + 32;
+            }
+          }
+          //tolower(added, added);
           results = search.AND_function(added, results);
         }
 
       }
 
       else if (And == false && Or == true) {
-        results = search.OR_function(operation);
-        while(!stream.empty()) {
-          stream >> added;
+        results = search.ONE_function(operation);
+        while(stream >> added) {
+          //stream >> added;
+          for (int i = 0; i < int(added.size()); i++) {
+            if (added[i] < 92) {
+              added[i] = added[i] + 32;
+            }
+          }
           results = search.OR_function(added, results);
         }
 
@@ -109,8 +128,8 @@ int main(int argc, char* argv[])
 
 
 
-    }
   }
+  
   return 0;
 }
 
