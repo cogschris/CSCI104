@@ -18,9 +18,7 @@ class PageParser {
    *  to some parser rules and all hyperlinks based 
    *  on the format the parser is designed to implement
    */
-  virtual void parse(std::string filename,
-		     MySetString& allWords,
-		     MySetString& allLinks) = 0;
+  virtual void parse(std::string filename, MySetString& allWords, MySetString& allLinks) = 0;
 };
 
 #endif

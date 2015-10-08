@@ -3,20 +3,20 @@ CXX = g++
 CPPFLAGS = -Wall -g
 
 
-$(BIN_DIR)/search: search.cpp $(BIN_DIR)/webpage.o $(BIN_DIR)/searcheng.o $(BIN_DIR)/myset.o $(BIN_DIR)/mdpageparser.o $(BIN_DIR)/.dirstamp
-	$(CXX) $(CPPFLAGS) $(BIN_DIR)/webpage.o $(BIN_DIR)/searcheng.o $(BIN_DIR)/myset.o $(BIN_DIR)/mdpageparser.o search.cpp -o $(BIN_DIR)/search
+search: search.cpp webpage.o searcheng.o myset.o mdpageparser.o 
+	$(CXX) $(CPPFLAGS) webpage.o searcheng.o myset.o mdpageparser.o search.cpp -o search
 
-$(BIN_DIR)/myset.o: myset.cpp $(BIN_DIR)/.dirstamp
-	$(CXX) $(CPPFLAGS) -c myset.cpp -o $(BIN_DIR)/myset.o
+myset.o: myset.cpp 
+	$(CXX) $(CPPFLAGS) -c myset.cpp -o myset.o
 
-$(BIN_DIR)/mdpageparser.o: mdpageparser.cpp $(BIN_DIR)/.dirstamp
-	$(CXX) $(CPPFLAGS) -c mdpageparser.cpp -o $(BIN_DIR)/mdpageparser.o
+mdpageparser.o: mdpageparser.cpp pageparser.h
+	$(CXX) $(CPPFLAGS) -c mdpageparser.cpp -o mdpageparser.o
 
-$(BIN_DIR)/webpage.o: webpage.cpp $(BIN_DIR)/.dirstamp
-	$(CXX) $(CPPFLAGS) -c webpage.cpp -o $(BIN_DIR)/webpage.o
+webpage.o: webpage.cpp 
+	$(CXX) $(CPPFLAGS) -c webpage.cpp -o webpage.o
 
-$(BIN_DIR)/searcheng.o: searcheng.cpp $(BIN_DIR)/.dirstamp
-	$(CXX) $(CPPFLAGS) -c searcheng.cpp -o $(BIN_DIR)/searcheng.o
+searcheng.o: searcheng.cpp 
+	$(CXX) $(CPPFLAGS) -c searcheng.cpp -o searcheng.o
 
 .PHONY: clean
 clean:
@@ -27,4 +27,3 @@ $(BIN_DIR)/.dirstamp:
 	touch $(BIN_DIR)/.dirstamps
 
 
-	

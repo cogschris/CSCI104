@@ -62,9 +62,9 @@ int main(int argc, char* argv[])
     istringstream stream (myline);
     while(stream >> operation && leave == false) {
 
-      if (And == false && Or == false) {
-        stream >> operation;
-      }
+      //if (And == false && Or == false) {
+        //stream >> operation;
+      //}
 
       if (operation == "AND") {
         And = true;
@@ -76,22 +76,21 @@ int main(int argc, char* argv[])
 
       if (And == false && Or == false) {
         if (!(stream >> operation)) {
-          cout << "Since you did not add an AND or OR to your search, we can only search for one item" << endl;
-          leave = true;
-          // NEED TO GET OUT OF THIS ENTIRE THING NOW
-        }
-
-        else {
           for (int i = 0; i < int(operation.size()); i++) {
             if (operation[i] < 92) {
               operation[i] = operation[i] + 32;
             }
+            results = search.ONE_function(operation);
           }
-          results = search.ONE_function(operation);
-          display_results(results);
-          leave = true;
-
         }
+
+        else {
+          cout << "Since you did not add an AND or OR to your search, we can only search for one item" << endl;
+          leave = true;
+          // NEED TO GET OUT OF THIS ENTIRE THING NOW
+          
+          }
+          
       }
 
       else if (And == true && Or == false) {

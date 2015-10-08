@@ -20,21 +20,22 @@ SearchEng::~SearchEng() {
 
 }
 
-void SearchEng::add_parse_from_index_file(std::string index_file, PageParser* parser) {
+void SearchEng::add_parse_from_index_file(string index_file, PageParser* parser) {
 
 	string file;
 	ifstream index;
 	index.open(index_file.c_str());
 
-	while (!index.eof()) {
-		getline(index, file);
+	while (index >> file) {
+		
 
 		add_parse_page(file, parser);
 		
 	}
+	index.close();
 }
 
-void SearchEng::add_parse_page(std::string filename, PageParser* parser) {
+void SearchEng::add_parse_page(string filename, PageParser* parser) {
 
 	MySetString allwords;
 	MySetString alllinks;

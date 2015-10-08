@@ -21,7 +21,7 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 
 	while (!text.eof()) {
 		getline(text, load);
-		int size = load.size();
+		int size = int(load.size());
 		bool specialpunc = false;
 		string enter;
 		bool front = false;

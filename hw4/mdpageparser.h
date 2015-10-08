@@ -12,16 +12,14 @@
 
 class MDPageParser : public PageParser {
  public:
-  ~MDPageParser();
+ virtual ~MDPageParser();
 
   /** 
    * Parses a file and returns all unique words according
    *  to some parser rules and all hyperlinks based 
    *  on the format the parser is designed to implement
    */
-  void parse(std::string filename,
-		     MySetString& allWords,
-		     MySetString& allLinks);
+ virtual void parse(std::string filename, MySetString& allWords, MySetString& allLinks);
 };
 
 #endif
