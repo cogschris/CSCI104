@@ -47,16 +47,17 @@ MySetWebPage::MySetWebPage() : std::set<WebPage*>() {}
 
 MySetWebPage MySetWebPage::set_intersection(const MySetWebPage& other) {
 	std::set<WebPage*>::iterator it;
-	std::set<WebPage*>::iterator check;
+	//std::set<WebPage*>::iterator check;
 	MySetWebPage temp;
 
 	for (it = other.begin(); it != other.end(); ++it) {
-		for (check = this->begin(); check != this->end(); ++check) {
-			if (check == it) {
+		//std::cout << *it << std::endl;
+		if(this -> find(*it) != this -> end()) {
 				temp.insert(*it);
+
 			}
 		}
-	}
+	
 	return temp;
 }
 

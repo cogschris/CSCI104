@@ -95,9 +95,11 @@ int main(int argc, char* argv[])
       }
 
       else if (And == true && Or == false) {
-        results = search.ONE_function(operation);
+        stream >> added;
+        results = search.ONE_function(added);
         while(stream >> added) {
           //stream >> added;
+          
           for (int i = 0; i < int(added.size()); i++) {
             if (added[i] < 92) {
               added[i] = added[i] + 32;
@@ -107,7 +109,7 @@ int main(int argc, char* argv[])
           results = search.AND_function(added, results);
           count++;
         }
-        if (count < 2) {
+        if (count < 1) {
           cout << "ERROR!" << endl;
           leave = true;
         }
@@ -117,9 +119,11 @@ int main(int argc, char* argv[])
       }
 
       else if (And == false && Or == true) {
+        stream >> operation;
         results = search.ONE_function(operation);
         while(stream >> added) {
           //stream >> added;
+
           for (int i = 0; i < int(added.size()); i++) {
             if (added[i] < 92) {
               added[i] = added[i] + 32;
@@ -128,7 +132,7 @@ int main(int argc, char* argv[])
           results = search.OR_function(added, results);
           count++;
         }
-        if (count < 2) {
+        if (count < 1) {
           cout << "ERROR!" << endl;
           leave = true;
         }

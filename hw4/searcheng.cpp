@@ -66,7 +66,7 @@ void SearchEng::add_parse_page(string filename, PageParser* parser) {
 MySetWebPage SearchEng::OR_function(std::string word, MySetWebPage compare) {
 	MySetWebPage temp;
 	
-	temp = (check[word]);
+	temp = (check.find(word)->second);
 	temp = compare.set_union(temp);
 	return temp;
 
@@ -77,6 +77,7 @@ MySetWebPage SearchEng::AND_function(std::string word, MySetWebPage compare) {
 	
 	temp = (check[word]);
 	temp = compare.set_intersection(temp);
+	//cout << temp << endl;
 	return temp;
 
 }
