@@ -31,7 +31,7 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 		for (int i = 0; i < size; i++) {
 			//if its alpha, then pass into new string
 			if (isalpha(load[i])) {
-				if (load[i] < 91) {
+				if (load[i] < 91 && specialpunc == false) {
 					load[i] = load[i] + 32;
 				}
 				enter = enter + load[i];
@@ -50,25 +50,32 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 				check = false;
 				front = false;
 				back = false;
-				allWords.insert(enter);
+				//allWords.insert(enter);
+				cout << enter << endl;
 				string enter;
 				specialpunc = true;
 			}
 
-			else if (!isalpha(load[i]) && specialpunc == true) {
-				enter = enter + load[i];
-			}
+			
 
 			else if (load[i] == ')') {
 				allLinks.insert(enter);
+				enter.clear();
 				string enter;
 				specialpunc = false;
+				check = false;
+				front = false;
+				back = false;
+			}
+			
+			else if (!(isalpha(load[i])) && specialpunc == true) {
+				enter = enter + load[i];
 			}
 
 			//if it is not an alpha or a space, and the punctuation is false, then end
 			//and start over
 
-			else if (!isalpha(load[i]) && specialpunc == false) {
+			else if (!(isalpha(load[i])) && specialpunc == false) {
 				if (check == true) {
 					check = false;
 					front = false;
@@ -82,6 +89,8 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 					check = true;
 				}
 				allWords.insert(enter);
+				cout << enter << endl;
+				enter.clear();
 				string enter;
 			}
 		}
