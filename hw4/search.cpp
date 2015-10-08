@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     string operation;
     MySetWebPage results;
     string added;
-
+    int count = 0;
     bool leave = false;
     if (myline[i] == '.') {
       break;
@@ -82,6 +82,7 @@ int main(int argc, char* argv[])
             }
             results = search.ONE_function(operation);
           }
+          display_results(results);
         }
 
         else {
@@ -104,8 +105,15 @@ int main(int argc, char* argv[])
           }
           //tolower(added, added);
           results = search.AND_function(added, results);
+          count++;
         }
-
+        if (count < 2) {
+          cout << "ERROR!" << endl;
+          leave = true;
+        }
+        else {
+        display_results(results);
+      }
       }
 
       else if (And == false && Or == true) {
@@ -118,12 +126,20 @@ int main(int argc, char* argv[])
             }
           }
           results = search.OR_function(added, results);
+          count++;
         }
-
+        if (count < 2) {
+          cout << "ERROR!" << endl;
+          leave = true;
+        }
+        else {
+        display_results(results);
       }
+      }
+
     }
 
-    display_results(results);
+    
 
 
 

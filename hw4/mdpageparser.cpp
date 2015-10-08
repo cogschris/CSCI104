@@ -51,7 +51,7 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 				front = false;
 				back = false;
 				//allWords.insert(enter);
-				cout << enter << endl;
+				//cout << enter << endl;
 				string enter;
 				specialpunc = true;
 			}
@@ -67,7 +67,7 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 				front = false;
 				back = false;
 			}
-			
+
 			else if (!(isalpha(load[i])) && specialpunc == true) {
 				enter = enter + load[i];
 			}
@@ -89,7 +89,7 @@ void MDPageParser::parse(string filename, MySetString& allWords, MySetString& al
 					check = true;
 				}
 				allWords.insert(enter);
-				cout << enter << endl;
+				//cout << enter << endl;
 				enter.clear();
 				string enter;
 			}
