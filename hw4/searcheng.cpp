@@ -72,10 +72,13 @@ MySetWebPage SearchEng::OR_function(std::string word, MySetWebPage compare) {
 	//bascially take the webpage and check to make sure the word exists
 	//on another page and if it does add it to the set 
 	MySetWebPage temp;
+	if (check.find(word) != check.end()) {
+		temp = (check.find(word)->second);
+		temp = compare.set_union(temp);
+		return temp;
+	}
 	
-	temp = (check.find(word)->second);
-	temp = compare.set_union(temp);
-	return temp;
+	return compare;
 
 }
 

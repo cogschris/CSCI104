@@ -65,16 +65,20 @@ int main(int argc, char* argv[])
     //load their words into string stream to inputted one at a time
     istringstream stream (myline);
     while(stream >> operation && leave == false) {
-
+      for (int i = 0; i < int(operation.size()); i++) {
+        if (operation[i] < 92) {
+                operation[i] = operation[i] + 32;
+            }
+      }
       //if (And == false && Or == false) {
         //stream >> operation;
       //}
 
       //if they load operators
-      if (operation == "AND") {
+      if (operation == "and") {
         And = true;
       }
-      else if (operation == "OR") {
+      else if (operation == "or") {
         Or = true;
       }
 
