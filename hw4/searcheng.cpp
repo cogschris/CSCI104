@@ -17,18 +17,21 @@ SearchEng::SearchEng() {
 }
 
 SearchEng::~SearchEng() {
-
+	std::set<WebPage*>::iterator it;
+	for (it = final.begin(); it != final.end(); ++it) {
+		delete *it;
+	}
 }
 
 void SearchEng::add_parse_from_index_file(string index_file, PageParser* parser) {
-
+	//load the file
 	string file;
 	ifstream index;
 	index.open(index_file.c_str());
 
 	while (index >> file) {
 		
-
+		//parse each page
 		add_parse_page(file, parser);
 		
 	}
@@ -36,7 +39,7 @@ void SearchEng::add_parse_from_index_file(string index_file, PageParser* parser)
 }
 
 void SearchEng::add_parse_page(string filename, PageParser* parser) {
-
+	//create the new things
 	MySetString allwords;
 	MySetString alllinks;
 	WebPage* add = new WebPage(filename);
@@ -44,7 +47,9 @@ void SearchEng::add_parse_page(string filename, PageParser* parser) {
 
 
 	parser -> parse(filename, allwords, alllinks);
-
+	//go through and check if the webpage and word exist
+	//if they dont, add them in
+	//if they do then just update the set
 	std::set<string>::iterator it;
 	for (it = allwords.begin(); it != allwords.end(); ++it) {
 		if (check.count(*it) == 0) {
@@ -60,10 +65,12 @@ void SearchEng::add_parse_page(string filename, PageParser* parser) {
 			check[*it] = update;
 		}
 	}
-
+	final.insert(add);
 }
 
 MySetWebPage SearchEng::OR_function(std::string word, MySetWebPage compare) {
+	//bascially take the webpage and check to make sure the word exists
+	//on another page and if it does add it to the set 
 	MySetWebPage temp;
 	
 	temp = (check.find(word)->second);
@@ -74,7 +81,7 @@ MySetWebPage SearchEng::OR_function(std::string word, MySetWebPage compare) {
 
 MySetWebPage SearchEng::AND_function(std::string word, MySetWebPage compare) {
 	MySetWebPage temp;
-	
+	//this time check to make sure the same word exists on both pages
 	temp = (check[word]);
 	temp = compare.set_intersection(temp);
 	//cout << temp << endl;
@@ -83,6 +90,7 @@ MySetWebPage SearchEng::AND_function(std::string word, MySetWebPage compare) {
 }
 
 MySetWebPage SearchEng::ONE_function(std::string word) {
+	//just return one to the set
 	MySetWebPage temp;
 	temp = (check[word]);
 

@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     /*  that match the search. It will display the   */
     /*  matching results to the screen for you.      */
 
-
+    //initialize all of my variables
     int i = 0;
     //int words = 0;
     bool And = false;
@@ -54,11 +54,15 @@ int main(int argc, char* argv[])
     string operation;
     MySetWebPage results;
     string added;
-    int count = 0;
+    //int count = 0;
     bool leave = false;
+
+    //check if person entered a period
     if (myline[i] == '.') {
       break;
     }
+
+    //load their words into string stream to inputted one at a time
     istringstream stream (myline);
     while(stream >> operation && leave == false) {
 
@@ -66,6 +70,7 @@ int main(int argc, char* argv[])
         //stream >> operation;
       //}
 
+      //if they load operators
       if (operation == "AND") {
         And = true;
       }
@@ -73,7 +78,7 @@ int main(int argc, char* argv[])
         Or = true;
       }
 
-
+      //check for one word and if not one word then you back out
       if (And == false && Or == false) {
         if (!(stream >> operation)) {
           for (int i = 0; i < int(operation.size()); i++) {
@@ -94,6 +99,7 @@ int main(int argc, char* argv[])
           
       }
 
+      //check for AND
       else if (And == true && Or == false) {
         stream >> added;
         results = search.ONE_function(added);
@@ -107,17 +113,18 @@ int main(int argc, char* argv[])
           }
           //tolower(added, added);
           results = search.AND_function(added, results);
-          count++;
+          //count++;
         }
-        if (count < 1) {
-          cout << "ERROR!" << endl;
-          leave = true;
-        }
-        else {
+        //if (count < 1) {
+          //cout << "ERROR!" << endl;
+          //leave = true;
+        //}
+        //else {
         display_results(results);
-      }
+      //}
       }
 
+      //check for OR
       else if (And == false && Or == true) {
         stream >> operation;
         results = search.ONE_function(operation);
@@ -130,15 +137,15 @@ int main(int argc, char* argv[])
             }
           }
           results = search.OR_function(added, results);
-          count++;
+          //count++;
         }
-        if (count < 1) {
-          cout << "ERROR!" << endl;
-          leave = true;
-        }
-        else {
+        //if (count < 1) {
+          //cout << "ERROR!" << endl;
+          //leave = true;
+        //}
+        //else {
         display_results(results);
-      }
+      //}
       }
 
     }
@@ -148,7 +155,7 @@ int main(int argc, char* argv[])
 
 
   }
-  
+  delete parser;
   return 0;
 }
 
