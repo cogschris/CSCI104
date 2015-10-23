@@ -1,49 +1,52 @@
-#ifndef MSORT_H
-#define MSORT_H
 
 
 #include <vector>
-#include 
+#include <iostream>
+#include <cmath>   
+
+using namespace std;
 
 
-class MSort {
- public: 
- 	template <class T, class Comparator>
-  	void mergeSort (vector<T> myArray, Comparator comp);
-  	void merge(vector<T> myArray, int b, int e, int m);
-  };
 
-
-void MSort::mergeSort(vector<T> myArray, Comparator comp, int b, int e) {
+template <class T, class Comparator>
+void mergeSort(vector<T> & myArray, Comparator comp, int b, int e) {
 	if (b < e) {
-		int m = floor((1 + e)/2); 
-		mergeSort(myArray, 1, m);
-		mergeSort(myArray, m+1, e);
-		Merge(myArray, comp, 1, r, m);
+
+		int m = floor((b + e)/2); 
+		mergeSort(myArray, comp, b, m);
+		mergeSort(myArray, comp, m+1, e);
+		merge(myArray, comp, b, e, m);
 	}
 }
 
-void MSort::merge(std::vector<T> myArray, Comparator comp, int l, int r, int m) {
-	vector<T> temp;
-	int i = l, j = m+1, k = 0;
+template <class T, class Comparator>
+void merge(std::vector<T> & myArray, Comparator comp, int l, int r, int m) {
+	//cout << myArray.size() << endl;
+	vector<T> temp(r +1 - l);
+	int i = l, j = m+1, k = 0; cout << l << " " << r << " " << m << endl;
 	while (i <= m || j <= r) {
-		if (i <= m && (j > r || myArray[i] <= myArray[j])) {
+		//cout << myArray[i] << endl;
+		//cout << i << " " << j << endl;
+
+		if (i <= m && ((j > r) || comp(myArray[i], myArray[j]))) {
 		
-			temp.push_back(myArray[i]); i ++; k ++; 
+			temp[k] = myArray[i]; i++; k++; 
+			//cout << "see me!" << endl;
 		}
 		else { 
-			temp.push_back(myArray[i]); j ++; k ++; 
+			temp[k] = myArray[j]; j++; k++;
+			//cout << "see me!" << endl; 
 		}
 		
 	}
-	for (k = 0; k < r+1-l; k ++) {
+	//cout << "hi superstar" << endl;
+	for (k = 0; k < r+1-l; k++) {
+		cout << temp[k]->filename() << endl;
 		myArray[k+l] = temp[k];
 	
 	}
 
 }
-
-
 
 
 
