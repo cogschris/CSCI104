@@ -5,6 +5,7 @@
 #include <QTextEdit>
 #include <QPushButton>
 #include <QListWidget>
+#include <QPlainTextEdit>
 #include <QRadioButton>
 #include <map>
 #include <vector>
@@ -33,6 +34,10 @@ private slots:
 	void displayresultsincoming();
 	void displayresultsoutgoing();
 	void functions();
+	void showpage(QListWidgetItem*);
+	void hidepage();
+	void closeapp();
+	void populate(WebPage*);
 	//void and_function();
 	//void or_function();
 	//void single_function();
@@ -45,26 +50,47 @@ private:
 	QHBoxLayout* overallLayout;
 	QVBoxLayout* display;
 	QVBoxLayout* formLayout;
-	QHBoxLayout* sorting;
+	//QHBoxLayout* sorting;
 	QListWidget* filelist;
 	// Displayed quote
 	QLabel* Input_text;
+	QLabel* label;
 	QRadioButton* AND_button;
 	QRadioButton* OR_button;
 	QRadioButton* SINGLE_button;
 	QPushButton* search_button;
-
+	QPushButton* exiting;
 	QPushButton* filename;
 	QPushButton* num_in;
 	QPushButton* num_out;
 	//QPushButton* refresh_button;
 
 	QLineEdit* search_text;
+	QHBoxLayout* labels;
+	QLabel* newin;
+	QLabel* newout;
+	QPushButton* filename2;
+	QPushButton* num_in2;
+	QPushButton* num_out2;
+
 
 
 	SearchEng searching;
 
 	MySetWebPage results;
+
+	std::vector<WebPage*> showlist;
+
+
+	QWidget* otherwin;
+	QVBoxLayout* otherlayout;
+	QLabel* title;
+	QTextEdit* webpagestuff;
+	QHBoxLayout* outin;
+	QListWidget* in;
+	QListWidget* out;
+	QPushButton* exitnew;
+
 	
 	//QLabel* pokemonNameDisplay;
 

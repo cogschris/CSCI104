@@ -9,12 +9,17 @@ using namespace std;
 
 
 template <class T, class Comparator>
-void mergeSort(vector<T> & myArray, Comparator comp, int b, int e) {
+void mergeSort(vector<T> & myArray, Comparator comp) {
+	mergehelper(myArray, comp, 0, myArray.size()-1);
+}
+
+template <class T, class Comparator>
+void mergehelper(vector<T> & myArray, Comparator comp, int b, int e) {
 	if (b < e) {
 
 		int m = floor((b + e)/2); 
-		mergeSort(myArray, comp, b, m);
-		mergeSort(myArray, comp, m+1, e);
+		mergehelper(myArray, comp, b, m);
+		mergehelper(myArray, comp, m+1, e);
 		merge(myArray, comp, b, e, m);
 	}
 }
@@ -23,7 +28,7 @@ template <class T, class Comparator>
 void merge(std::vector<T> & myArray, Comparator comp, int l, int r, int m) {
 	//cout << myArray.size() << endl;
 	vector<T> temp(r +1 - l);
-	int i = l, j = m+1, k = 0; cout << l << " " << r << " " << m << endl;
+	int i = l, j = m+1, k = 0; //cout << l << " " << r << " " << m << endl;
 	while (i <= m || j <= r) {
 		//cout << myArray[i] << endl;
 		//cout << i << " " << j << endl;
@@ -41,7 +46,7 @@ void merge(std::vector<T> & myArray, Comparator comp, int l, int r, int m) {
 	}
 	//cout << "hi superstar" << endl;
 	for (k = 0; k < r+1-l; k++) {
-		cout << temp[k]->filename() << endl;
+		//cout << temp[k]->filename() << endl;
 		myArray[k+l] = temp[k];
 	
 	}
