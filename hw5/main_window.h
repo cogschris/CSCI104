@@ -78,8 +78,13 @@ private:
 	SearchEng searching;
 
 	MySetWebPage results;
+	MySetWebPage secondin;
+	MySetWebPage secondout;
 
 	std::vector<WebPage*> showlist;
+
+	std::vector<WebPage*> showinlist;
+	std::vector<WebPage*> showoutlist;
 
 
 	QWidget* otherwin;

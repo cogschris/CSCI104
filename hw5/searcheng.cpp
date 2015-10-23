@@ -74,12 +74,18 @@ void SearchEng::add_parse_page(string filename, PageParser* parser, WebPage* web
 	}
 
 	for (it = alllinks.begin(); it != alllinks.end(); ++it) {
-		WebPage* add = new WebPage(*it);
-		web->add_outgoing_link(add);
+		/*WebPage* add = new WebPage(*it);
+		std::set<WebPage*>::iterator it2;
+		for (it2 = final.begin(); it2 != final.end(); ++it2) {
+			if (*it2 == add->filename()) {
+				(web)->add_outgoing_link(*it2);
+			}
+		web->add_outgoing_link(add);*/
 		std::set<WebPage*>::iterator it2;
 		for (it2 = final.begin(); it2 != final.end(); ++it2) {
 			if (*it == (*it2)->filename()) {
 				(*it2)->add_incoming_link(web);
+				web->add_outgoing_link(*it2);
 			}
 		}
 	}

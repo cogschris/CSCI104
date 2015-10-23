@@ -112,6 +112,7 @@ MainWindow::MainWindow(string name)
 	otherlayout->addWidget(title);
 
 	webpagestuff = new QTextEdit();
+	webpagestuff->setReadOnly(true);
 	otherlayout->addWidget(webpagestuff);
 
 	labels = new QHBoxLayout();
@@ -344,13 +345,16 @@ void MainWindow::functions() {
 }
 
 void MainWindow::showpage(QListWidgetItem* translate) {
-	WebPage* population;
+	//WebPage* population;
 	string test;
 	QString str = translate->text();
 	istringstream stream (str.toStdString());
 	stream >> test;
 	for (int i = 0; i < int(showlist.size()); i++) {
 		if (showlist[i]->filename() == test) {
+			secondin = showlist[i] -> incoming_links();
+			secondout = showlist[i] -> outgoing_links();
+			cout << showlist[i] -> outgoing() << endl;
 			populate(showlist[i]);
 		}
 	}
@@ -364,6 +368,70 @@ void MainWindow::hidepage() {
 }
 
 void MainWindow::populate(WebPage* web) {
-	title = QLabel(QString::fromStdString(web->filename()));
+	title->setText(QString::fromStdString(web->filename()));
+	//ostream propugation(NULL); 
+	stringstream propugation;
+	propugation << *web;
+	string str;
+	str =  propugation.str();
+	webpagestuff->setText(QString::fromStdString(str));
 
+
+
+
+
+	std::set<WebPage*>::iterator it;
+	
+	Alphabet comp;
+	for (it = secondin.begin(); it != secondin.end(); ++it) {
+		
+		showinlist.push_back(*it);
+	}
+
+	for (it = secondout.begin(); it != secondout.end(); ++it) {
+		
+		showoutlist.push_back(*it);
+		cout << (*it)->incoming() << " " << (*it)->outgoing() << endl;
+	}
+
+
+
+	//cout << alphsize << endl;
+	mergeSort(showinlist, comp);
+	mergeSort(showoutlist, comp);
+
+	int outinsize = showinlist.size();
+	int outoutsize = showoutlist.size();
+
+	for (int i = 0; i < outinsize; i++) {	
+
+		QString temp;
+
+		//temp += "\"";
+		temp += QString::fromStdString((showinlist[i])->filename());
+		temp += "  ";
+		temp += QString::number((showinlist[i])->incoming());
+		temp += "  ";
+		temp += QString::number((showinlist[i])->outgoing());
+		//temp += "\"";
+		in->addItem(temp);
+	}
+
+	for (int i = 0; i < outoutsize; i++) {	
+
+		QString temp;
+
+		//temp += "\"";
+		temp += QString::fromStdString((showoutlist[i])->filename());
+		temp += "  ";
+		temp += QString::number((showoutlist[i])->incoming());
+		//std::cout << (showoutlist[i])->incoming() << std::endl;
+		temp += "  ";
+		temp += QString::number((showoutlist[i])->outgoing());
+		//cout << (showoutlist[i])->outgoing() << endl;
+		//temp += "\"";
+		out->addItem(temp);
+	}
+	
+	
 }
