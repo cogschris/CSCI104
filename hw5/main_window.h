@@ -41,7 +41,8 @@ private slots:
 	void sortalph();
 	void sortinc();
 	void sortout();
-	//void error();
+	void error();
+	void hideerror();
 	//void and_function();
 	//void or_function();
 	//void single_function();
@@ -99,6 +100,12 @@ private:
 	QListWidget* in;
 	QListWidget* out;
 	QPushButton* exitnew;
+
+
+	QWidget* errorwin;
+	QVBoxLayout* errorlayout;
+	QLabel* errormessage;
+	QPushButton* exiterror;
 
 	
 	//QLabel* pokemonNameDisplay;

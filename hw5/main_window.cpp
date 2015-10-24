@@ -163,7 +163,17 @@ MainWindow::MainWindow(string name)
 
 	otherwin->setLayout(otherlayout);
 
+	errorlayout = new QVBoxLayout();
+	errorwin = new QWidget();
 
+	errormessage = new QLabel("Sorry, you used the program incorrectly. Please re-read the instructions before continuing to use the program. Have a nice day! :)");
+	errorlayout->addWidget(errormessage);
+
+	exiterror = new QPushButton("Back to searching!");
+	connect(exiterror, SIGNAL(clicked()), this, SLOT(hideerror()));
+	errorlayout->addWidget(exiterror);
+
+	errorwin->setLayout(errorlayout);
 
 }
 
@@ -354,7 +364,7 @@ void MainWindow::functions() {
             }
           }
         if (stream >> loading) {
-        //	error();
+        	error();
         	return;
         }
 		results = searching.ONE_function(loading);
@@ -384,6 +394,14 @@ void MainWindow::showpage(QListWidgetItem* translate) {
 
 void MainWindow::hidepage() {
 	otherwin->hide();
+}
+
+void MainWindow::error() {
+	errorwin->show();
+}
+
+void MainWindow::hideerror() {
+	errorwin->hide();
 }
 
 void MainWindow::populate(WebPage* web) {

@@ -4,17 +4,17 @@
 #include <iostream>
 #include <cmath>   
 
-using namespace std;
+//using namespace std;
 
 
 
 template <class T, class Comparator>
-void mergeSort(vector<T> & myArray, Comparator comp) {
+void mergeSort(std::vector<T> & myArray, Comparator comp) {
 	mergehelper(myArray, comp, 0, myArray.size()-1);
 }
 
 template <class T, class Comparator>
-void mergehelper(vector<T> & myArray, Comparator comp, int b, int e) {
+void mergehelper(std::vector<T> & myArray, Comparator comp, int b, int e) {
 	if (b < e) {
 
 		int m = floor((b + e)/2); 
@@ -27,7 +27,7 @@ void mergehelper(vector<T> & myArray, Comparator comp, int b, int e) {
 template <class T, class Comparator>
 void merge(std::vector<T> & myArray, Comparator comp, int l, int r, int m) {
 	//cout << myArray.size() << endl;
-	vector<T> temp(r +1 - l);
+	std::vector<T> temp(r +1 - l);
 	int i = l, j = m+1, k = 0; //cout << l << " " << r << " " << m << endl;
 	while (i <= m || j <= r) {
 		//cout << myArray[i] << endl;
