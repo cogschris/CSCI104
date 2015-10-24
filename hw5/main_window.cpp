@@ -82,7 +82,10 @@ MainWindow::MainWindow(string name)
 	formLayout->addWidget(Input_text);
 
 	search_text = new QLineEdit();
+	
 	formLayout->addWidget(search_text);
+
+
 
 	AND_button = new QRadioButton("AND", this);
 	formLayout->addWidget(AND_button);
@@ -96,6 +99,7 @@ MainWindow::MainWindow(string name)
 
 	search_button = new QPushButton("Search");
 	connect(search_button, SIGNAL(clicked()), this, SLOT(functions()));
+	connect(search_text, SIGNAL(returnPressed()), this, SLOT(functions()));
 	formLayout->addWidget(search_button);
 
 	exiting = new QPushButton("Exit Application");
@@ -108,15 +112,19 @@ MainWindow::MainWindow(string name)
 	otherlayout = new QVBoxLayout();
 	otherwin = new QWidget;
 
-	title = new QLabel();
-	otherlayout->addWidget(title);
+	
 
 	webpagestuff = new QTextEdit();
 	webpagestuff->setReadOnly(true);
 	otherlayout->addWidget(webpagestuff);
 
+	title = new QLabel("Remember, data is organized as follows: filename / number of incoming links / number of outgoing links");
+	otherlayout->addWidget(title);
+
+
 	labels = new QHBoxLayout();
 	otherlayout->addLayout(labels);
+
 
 	newin = new QLabel("Incoming Links:");
 	labels->addWidget(newin);
@@ -128,18 +136,25 @@ MainWindow::MainWindow(string name)
 	otherlayout->addLayout(outin);
 
 	in = new QListWidget();
+	connect(in, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showpage(QListWidgetItem*)));
 	outin->addWidget(in);
 
 	out = new QListWidget();
+	connect(out, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showpage(QListWidgetItem*)));
 	outin->addWidget(out);
 
+	
+
 	filename2 = new QPushButton("Sort by filename");
+	connect(filename2, SIGNAL(clicked()), this, SLOT(sortalph()));
 	otherlayout->addWidget(filename2);
 
 	num_in2 = new QPushButton("Sort by incoming links");
+	connect(num_in2, SIGNAL(clicked()), this, SLOT(sortinc()));
 	otherlayout->addWidget(num_in2);
 
 	num_out2 = new QPushButton("Sort by outgoing links");
+	connect(num_out2, SIGNAL(clicked()), this, SLOT(sortout()));
 	otherlayout->addWidget(num_out2);
 
 	exitnew = new QPushButton("Exit");
@@ -181,10 +196,10 @@ void MainWindow::displayresults() {
 		//cout << i << endl;
 		//cout << showlist[i]->filename() << endl;
 		temp += QString::fromStdString((showlist[i])->filename());
-		temp += "  ";
+		temp += "  In: ";
 		//cout << "damn" << endl;
 		temp += QString::number((showlist[i])->incoming());
-		temp += "  ";
+		temp += "  Out: ";
 		//cout << "okay" << endl;
 		temp += QString::number((showlist[i])->outgoing());
 		//temp += "\"";
@@ -213,9 +228,9 @@ void MainWindow::displayresultsincoming() {
 
 		//temp += "\"";
 		temp += QString::fromStdString((showlist[i])->filename());
-		temp += "  ";
+		temp += "  In: ";
 		temp += QString::number((showlist[i])->incoming());
-		temp += "  ";
+		temp += "  Out: ";
 		temp += QString::number((showlist[i])->outgoing());
 		//temp += "\"";
 		filelist->addItem(temp);
@@ -242,9 +257,9 @@ void MainWindow::displayresultsoutgoing() {
 
 		//temp += "\"";
 		temp += QString::fromStdString((showlist[i])->filename());
-		temp += "  ";
+		temp += "  In: ";
 		temp += QString::number((showlist[i])->incoming());
-		temp += "  ";
+		temp += "  Out: ";
 		temp += QString::number((showlist[i])->outgoing());
 		//temp += "\"";
 		filelist->addItem(temp);
@@ -338,6 +353,10 @@ void MainWindow::functions() {
               loading[i] = loading[i] + 32;
             }
           }
+        if (stream >> loading) {
+        //	error();
+        	return;
+        }
 		results = searching.ONE_function(loading);
 	}
 
@@ -354,7 +373,7 @@ void MainWindow::showpage(QListWidgetItem* translate) {
 		if (showlist[i]->filename() == test) {
 			secondin = showlist[i] -> incoming_links();
 			secondout = showlist[i] -> outgoing_links();
-			cout << showlist[i] -> outgoing() << endl;
+			//cout << showlist[i] -> outgoing() << endl;
 			populate(showlist[i]);
 		}
 	}
@@ -368,17 +387,20 @@ void MainWindow::hidepage() {
 }
 
 void MainWindow::populate(WebPage* web) {
-	title->setText(QString::fromStdString(web->filename()));
+	otherwin->setWindowTitle(QString::fromStdString(web->filename()));
 	//ostream propugation(NULL); 
 	stringstream propugation;
 	propugation << *web;
-	string str;
+	string str="";
 	str =  propugation.str();
 	webpagestuff->setText(QString::fromStdString(str));
+	sortalph();
+}
 
+void MainWindow::sortalph() {
 
-
-
+	showinlist.clear(); showoutlist.clear();
+	in->clear(); out->clear();
 
 	std::set<WebPage*>::iterator it;
 	
@@ -391,7 +413,7 @@ void MainWindow::populate(WebPage* web) {
 	for (it = secondout.begin(); it != secondout.end(); ++it) {
 		
 		showoutlist.push_back(*it);
-		cout << (*it)->incoming() << " " << (*it)->outgoing() << endl;
+		//cout << (*it)->incoming() << " " << (*it)->outgoing() << endl;
 	}
 
 
@@ -409,9 +431,9 @@ void MainWindow::populate(WebPage* web) {
 
 		//temp += "\"";
 		temp += QString::fromStdString((showinlist[i])->filename());
-		temp += "  ";
+		temp += "  In: ";
 		temp += QString::number((showinlist[i])->incoming());
-		temp += "  ";
+		temp += "  Out: ";
 		temp += QString::number((showinlist[i])->outgoing());
 		//temp += "\"";
 		in->addItem(temp);
@@ -423,10 +445,132 @@ void MainWindow::populate(WebPage* web) {
 
 		//temp += "\"";
 		temp += QString::fromStdString((showoutlist[i])->filename());
-		temp += "  ";
+		temp += "  In: ";
 		temp += QString::number((showoutlist[i])->incoming());
 		//std::cout << (showoutlist[i])->incoming() << std::endl;
-		temp += "  ";
+		temp += "  Out: ";
+		temp += QString::number((showoutlist[i])->outgoing());
+		//cout << (showoutlist[i])->outgoing() << endl;
+		//temp += "\"";
+		out->addItem(temp);
+	}
+	
+	
+}
+
+void MainWindow::sortinc() {
+
+	showinlist.clear(); showoutlist.clear();
+	in->clear(); out->clear();
+
+	std::set<WebPage*>::iterator it;
+	
+	IncomingComp comp;
+	for (it = secondin.begin(); it != secondin.end(); ++it) {
+		
+		showinlist.push_back(*it);
+	}
+
+	for (it = secondout.begin(); it != secondout.end(); ++it) {
+		
+		showoutlist.push_back(*it);
+		//cout << (*it)->incoming() << " " << (*it)->outgoing() << endl;
+	}
+
+
+
+	//cout << alphsize << endl;
+	mergeSort(showinlist, comp);
+	mergeSort(showoutlist, comp);
+
+	int outinsize = showinlist.size();
+	int outoutsize = showoutlist.size();
+
+	for (int i = 0; i < outinsize; i++) {	
+
+		QString temp;
+
+		//temp += "\"";
+		temp += QString::fromStdString((showinlist[i])->filename());
+		temp += "  In: ";
+		temp += QString::number((showinlist[i])->incoming());
+		temp += "  Out: ";
+		temp += QString::number((showinlist[i])->outgoing());
+		//temp += "\"";
+		in->addItem(temp);
+	}
+
+	for (int i = 0; i < outoutsize; i++) {	
+
+		QString temp;
+
+		//temp += "\"";
+		temp += QString::fromStdString((showoutlist[i])->filename());
+		temp += "  In: ";
+		temp += QString::number((showoutlist[i])->incoming());
+		//std::cout << (showoutlist[i])->incoming() << std::endl;
+		temp += "  Out: ";
+		temp += QString::number((showoutlist[i])->outgoing());
+		//cout << (showoutlist[i])->outgoing() << endl;
+		//temp += "\"";
+		out->addItem(temp);
+	}
+	
+	
+}
+
+void MainWindow::sortout() {
+
+	showinlist.clear(); showoutlist.clear();
+	in->clear(); out->clear();
+
+	std::set<WebPage*>::iterator it;
+	
+	OutgoingComp comp;
+	for (it = secondin.begin(); it != secondin.end(); ++it) {
+		
+		showinlist.push_back(*it);
+	}
+
+	for (it = secondout.begin(); it != secondout.end(); ++it) {
+		
+		showoutlist.push_back(*it);
+		//cout << (*it)->incoming() << " " << (*it)->outgoing() << endl;
+	}
+
+
+
+	//cout << alphsize << endl;
+	mergeSort(showinlist, comp);
+	mergeSort(showoutlist, comp);
+
+	int outinsize = showinlist.size();
+	int outoutsize = showoutlist.size();
+
+	for (int i = 0; i < outinsize; i++) {	
+
+		QString temp;
+
+		//temp += "\"";
+		temp += QString::fromStdString((showinlist[i])->filename());
+		temp += "  In: ";
+		temp += QString::number((showinlist[i])->incoming());
+		temp += "  Out: ";
+		temp += QString::number((showinlist[i])->outgoing());
+		//temp += "\"";
+		in->addItem(temp);
+	}
+
+	for (int i = 0; i < outoutsize; i++) {	
+
+		QString temp;
+
+		//temp += "\"";
+		temp += QString::fromStdString((showoutlist[i])->filename());
+		temp += "  In: ";
+		temp += QString::number((showoutlist[i])->incoming());
+		//std::cout << (showoutlist[i])->incoming() << std::endl;
+		temp += "  Out: ";
 		temp += QString::number((showoutlist[i])->outgoing());
 		//cout << (showoutlist[i])->outgoing() << endl;
 		//temp += "\"";

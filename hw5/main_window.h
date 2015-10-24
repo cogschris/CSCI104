@@ -38,6 +38,10 @@ private slots:
 	void hidepage();
 	void closeapp();
 	void populate(WebPage*);
+	void sortalph();
+	void sortinc();
+	void sortout();
+	//void error();
 	//void and_function();
 	//void or_function();
 	//void single_function();
