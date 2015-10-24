@@ -6,6 +6,10 @@ TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
+CONFIG += debug               # enables debugging (like the -g flag)
+TARGET = search               # sets output executable name to search
+QMAKE_CXXFLAGS += -std=c++11  # enable C++11 libraries
+SOURCES -= msort_test.cpp # Don't compile certain test files as part of the search application
 
 # Input
 HEADERS += main_window.h \
