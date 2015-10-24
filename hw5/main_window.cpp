@@ -16,6 +16,8 @@
 
 using namespace std;
 
+
+//basic structs based on alphabet, outgoing and incoming
 struct OutgoingComp {
     bool operator()(WebPage* lhs, WebPage* rhs) 
     { 
@@ -39,7 +41,7 @@ struct Alphabet {
 
 MainWindow::MainWindow(string name)
 {
-	
+	//constructing the qt with like EVERYTHING ITS SO MUCH
 	PageParser* parser = new MDPageParser;
 	
 	searching.add_parse_from_index_file(name, parser);
@@ -57,11 +59,6 @@ MainWindow::MainWindow(string name)
 	filelist = new QListWidget();
 	connect(filelist, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showpage(QListWidgetItem*)));
 	display->addWidget(filelist);
-
-	
-
-	//refresh_button = new QPushButton("Refresh/Reload");
-	///display->addWidget(refresh_button);
 
 	filename = new QPushButton("Sort by filename");
 	connect(filename, SIGNAL(clicked()), this, SLOT(displayresults()));
@@ -85,8 +82,6 @@ MainWindow::MainWindow(string name)
 	
 	formLayout->addWidget(search_text);
 
-
-
 	AND_button = new QRadioButton("AND", this);
 	formLayout->addWidget(AND_button);
 
@@ -108,11 +103,9 @@ MainWindow::MainWindow(string name)
 	
 	setLayout(overallLayout);
 
-
+	//otherwindow stuff now
 	otherlayout = new QVBoxLayout();
 	otherwin = new QWidget;
-
-	
 
 	webpagestuff = new QTextEdit();
 	webpagestuff->setReadOnly(true);
@@ -143,8 +136,6 @@ MainWindow::MainWindow(string name)
 	connect(out, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showpage(QListWidgetItem*)));
 	outin->addWidget(out);
 
-	
-
 	filename2 = new QPushButton("Sort by filename");
 	connect(filename2, SIGNAL(clicked()), this, SLOT(sortalph()));
 	otherlayout->addWidget(filename2);
@@ -163,6 +154,7 @@ MainWindow::MainWindow(string name)
 
 	otherwin->setLayout(otherlayout);
 
+	//error window
 	errorlayout = new QVBoxLayout();
 	errorwin = new QWidget();
 
@@ -178,46 +170,46 @@ MainWindow::MainWindow(string name)
 }
 
 MainWindow::~MainWindow() {
-
+	//never really allocated stuff so dont need it
 }
 
 void MainWindow::displayresults() {
-	
+	//always want to clear before loading stuff in
 	filelist->clear();
 	std::set<WebPage*>::iterator it;
 	showlist.clear();
 	Alphabet comp;
+	//push webpages into vectors
 	for (it = results.begin(); it != results.end(); ++it) {
 		
 		showlist.push_back(*it);
-		//cout << (*it)->filename() << endl;
+		
 	}
 
 	int alphsize = showlist.size();
-	//cout << alphsize << endl;
 	
+	//MERGESORT!!!
 	mergeSort(showlist, comp);
-	//cout << "done" << endl;
+	//write out everything
 	for (int i = 0; i < alphsize; i++) {	
-		//cout << "fuck" << endl;
+		
 		QString temp;
 
-		//temp += "\"";
-		//cout << i << endl;
-		//cout << showlist[i]->filename() << endl;
+		
 		temp += QString::fromStdString((showlist[i])->filename());
 		temp += "  In: ";
-		//cout << "damn" << endl;
+		
 		temp += QString::number((showlist[i])->incoming());
 		temp += "  Out: ";
-		//cout << "okay" << endl;
+		
 		temp += QString::number((showlist[i])->outgoing());
-		//temp += "\"";
+		
 		filelist->addItem(temp);
-		//cout << "shit" << endl;
+		
 	}
 }
 
+//basically same thing as above except for different comparator
 void MainWindow::displayresultsincoming() {
 	filelist->clear();
 	std::set<WebPage*>::iterator it;
@@ -246,7 +238,7 @@ void MainWindow::displayresultsincoming() {
 		filelist->addItem(temp);
 	}
 }
-
+//yep same thing as above
 void MainWindow::displayresultsoutgoing() {
 	filelist->clear();
 	std::set<WebPage*>::iterator it;
@@ -275,17 +267,17 @@ void MainWindow::displayresultsoutgoing() {
 		filelist->addItem(temp);
 	}
 }
-
+//just a way to close the app
 void MainWindow::closeapp() {
 	otherwin->hide();
 	close();
 }
-
+//this is how i run through the different functions
 void MainWindow::functions() {
 	
-
+	//if something is checked then run whatever
 	if (AND_button->isChecked()) {
-		//AND_button->setChecked(false);
+		
 		if (search_text->text().isEmpty()) {
 			
 			return;
@@ -301,6 +293,7 @@ void MainWindow::functions() {
               loading[i] = loading[i] + 32;
             }
           }
+         //initializedand then run the stuff
 		results = searching.ONE_function(loading);
 
 		while (stream >> loading) {
@@ -314,7 +307,7 @@ void MainWindow::functions() {
 		}
 
 	}
-
+//same as above
 	else if (OR_button->isChecked()) {
 		//OR_button->setChecked(false);
 		if (search_text->text().isEmpty()) {
@@ -345,7 +338,7 @@ void MainWindow::functions() {
 		}
 
 	}
-
+//same thing as above for single
 	else if (SINGLE_button->isChecked()) {
 		//SINGLE_button->setChecked(false);
 		if (search_text->text().isEmpty()) {
@@ -372,9 +365,10 @@ void MainWindow::functions() {
 
 	displayresults();
 }
-
+//to call the new webpage
 void MainWindow::showpage(QListWidgetItem* translate) {
-	//WebPage* population;
+	
+	//basically getthe webpage and then do stuff from there
 	string test;
 	QString str = translate->text();
 	istringstream stream (str.toStdString());
@@ -403,7 +397,7 @@ void MainWindow::error() {
 void MainWindow::hideerror() {
 	errorwin->hide();
 }
-
+//called by function above to fill stuff on the new window
 void MainWindow::populate(WebPage* web) {
 	otherwin->setWindowTitle(QString::fromStdString(web->filename()));
 	//ostream propugation(NULL); 
@@ -421,7 +415,7 @@ void MainWindow::sortalph() {
 	in->clear(); out->clear();
 
 	std::set<WebPage*>::iterator it;
-	
+	//just search through and get webpages and sort them
 	Alphabet comp;
 	for (it = secondin.begin(); it != secondin.end(); ++it) {
 		
@@ -442,7 +436,7 @@ void MainWindow::sortalph() {
 
 	int outinsize = showinlist.size();
 	int outoutsize = showoutlist.size();
-
+//have to do tiwce because two differenct lists
 	for (int i = 0; i < outinsize; i++) {	
 
 		QString temp;
@@ -475,7 +469,7 @@ void MainWindow::sortalph() {
 	
 	
 }
-
+//same
 void MainWindow::sortinc() {
 
 	showinlist.clear(); showoutlist.clear();
@@ -536,7 +530,7 @@ void MainWindow::sortinc() {
 	
 	
 }
-
+//same
 void MainWindow::sortout() {
 
 	showinlist.clear(); showoutlist.clear();
