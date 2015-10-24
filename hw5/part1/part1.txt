@@ -1,0 +1,15 @@
+Explanation:
+
+Restaurant calls functions that include defintions of all things that go on. Restaurant is the overarching class because the restaurant contains all their functions and jobs
+
+Then you have the abstract class employee which essentially passs the pay function to each worker (they are paid in different amounts which is why they all need to inherit themselves) and that function that they share is the pay
+
+And each worker has different jobs. The chef has a vector to take in orders in their queue and then remove them. They also have a cetain time they cook depending on their skills. 
+The waiter has to get orders and pop them to the chef(they just hang onto the orders or pop them) and they have to get the food and bring it out similar to how they got orders. to that end they have two vectors
+And then the host and owner do nothing except exact their pay, so they inherit their own special pay calculation functions
+
+
+Now the party is comprised of many people who take different amount of time for eating and ordering. So that means party could be abstract and pass all the functions along to the different groups of people. 
+The walk in and celebrity and reseved people all have the same functions, because all groups function practically the same. the only differnece would be the values chosen like what the tip is or how big the party is. 
+And provided the group is large enough to qualify for the bigger group tip, the function in the inherited class will handle that.
+These groups of people serve no other purpose in the whole dynamic of the restaurant, so as a result, they don't have anymore functions
