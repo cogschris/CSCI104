@@ -35,10 +35,11 @@ std::map<string, string> crawl(string input, std::map<string, string> &items) {
 		}
 	
 	}*/
-
+//open the file
 	ifstream starter;
 	starter.open(input.c_str());
 
+//parse through looking for keywords to put as a pair in a map
 	while (!starter.eof()) {
 		bool invalid = false;
 
@@ -110,6 +111,8 @@ std::map<string, string> crawl(string input, std::map<string, string> &items) {
 	std::set<string> links;
 	std::vector<string> outie;
 
+//so now load all the index and then as you load them you push them into
+//a vector where you will print them out one by one on the final doc
 //alllinks << "file" << endl;
 	while (index >> file) {
 
@@ -140,7 +143,7 @@ void build_index(std::vector<string> links, string output) {
 	
 	
 	std::vector<string>::iterator it;
-	
+	//iterate through and print
 	for (it = links.begin(); it != links.end(); ++it) {
 		alllinks << *it << "\n";
 		
@@ -150,6 +153,7 @@ void build_index(std::vector<string> links, string output) {
 
 }
 
+//parse function is exactly like MDPageParser
 void parse(string filename, std::set<string> &allLinks, std::vector<string> &outie) {
 	//ofstream alllinks;
 	//alllinks.open(output.c_str());
