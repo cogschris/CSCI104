@@ -1,10 +1,10 @@
-#include "main_window.h"
-#include <QApplication>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <set>
+#include <vector>
+#include <map>
 //#include "crawler.h"
 
 using namespace std;
@@ -246,17 +246,17 @@ void parse(string filename, std::set<string> &allLinks, std::vector<string> &out
 }
 
 int main (int argc, char* argv[]) {
-	
+	std::map<string, string> items;
 	string config;
 	if (argc >= 2) {
 		config = argv[2];
-		crawl(config);
+		crawl(config, items);
 	}
 
 	else {
 		config = "config.txt";
 		
-		crawl(config);
+		crawl(config, items);
 		
 	}
 
