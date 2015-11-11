@@ -222,7 +222,7 @@ void MainWindow::displayresults() {
 		if ((*it)->outgoing() > 0) {
 
 			for (it2 = outc.begin(); it2 != outc.end(); ++it2) {
-				cout << (*it2)->filename() << endl;
+				//cout << (*it2)->filename() << endl;
 				push.insert(*it2);
 				
 				
@@ -325,6 +325,9 @@ void MainWindow::displayresultsfilename() {
 		temp += "  Out: ";
 		
 		temp += QString::number((showlist[i])->outgoing());
+		temp += "  PR: ";
+
+		temp += QString::number((showlist[i])->get_pagerank());
 		
 		filelist->addItem(temp);
 		
@@ -383,10 +386,15 @@ void MainWindow::displayresultsincoming() {
 		//temp += "\"";
 		temp += QString::fromStdString((showlist[i])->filename());
 		temp += "  In: ";
+		
 		temp += QString::number((showlist[i])->incoming());
 		temp += "  Out: ";
+		
 		temp += QString::number((showlist[i])->outgoing());
-		//temp += "\"";
+		temp += "  PR: ";
+
+		temp += QString::number((showlist[i])->get_pagerank());
+		
 		filelist->addItem(temp);
 	}
 }
@@ -409,23 +417,23 @@ void MainWindow::displayresultsoutgoing() {
 				push.insert(*it2);
 			}
 		}
-		cout << "hi" << endl;
+		//cout << "hi" << endl;
 		MySetWebPage outc;
 		outc = (*it)->outgoing_links();
 		if ((*it)->outgoing() > 0) {
-cout << (*it)->outgoing() << endl;
-cout<< (*it)->filename() << endl;
+//cout << (*it)->outgoing() << endl;
+//cout<< (*it)->filename() << endl;
 			for (it2 = outc.begin(); it2 != outc.end(); ++it2) {
-				cout << (*it2)->filename() << endl;
+				//cout << (*it2)->filename() << endl;
 				push.insert(*it2);
 				
 				
 			}
 			inc.clear();
 			outc.clear();
-			cout << "done " << endl;
+			//cout << "done " << endl;
 		}
-		cout << "what is this?? " << endl;
+		//cout << "what is this?? " << endl;
 	}
 	for (it = push.begin(); it != push.end(); ++it) {
 		
@@ -442,10 +450,15 @@ cout<< (*it)->filename() << endl;
 		//temp += "\"";
 		temp += QString::fromStdString((showlist[i])->filename());
 		temp += "  In: ";
+		
 		temp += QString::number((showlist[i])->incoming());
 		temp += "  Out: ";
+		
 		temp += QString::number((showlist[i])->outgoing());
-		//temp += "\"";
+		temp += "  PR: ";
+
+		temp += QString::number((showlist[i])->get_pagerank());
+		
 		filelist->addItem(temp);
 	}
 }
@@ -788,12 +801,12 @@ void MainWindow::initializepagerank(std::vector<WebPage*> rank) {
 		for (it2 = temp.begin(); it2 != temp.end(); ++it2) {
 			if ((*it2)->filename() == (*it)->filename()){
 				found = true;
-				cout << "found!!" << endl;
+				
 			}
 		}
 		if (found != true) {
-			//(*it)->set_found(true);
-			(*it)->set_out((*it)->outgoing() + 1);
+			(*it)->set_found(true);
+			//(*it)->set_out((*it)->outgoing() + 1);
 		}
 	}
 
@@ -803,7 +816,7 @@ void MainWindow::initializepagerank(std::vector<WebPage*> rank) {
 }
 
 void MainWindow::iteratepagerank(std::vector<WebPage*> rank) {
-	cout << "STARTING PAGERANK" <<endl;
+	
 	iteratorcounter++;
 	std::vector<WebPage*> temp;
 	temp = rank;
@@ -824,15 +837,15 @@ void MainWindow::iteratepagerank(std::vector<WebPage*> rank) {
 			cout <<"\t" <<(*it3)->filename() <<" outgoing" <<endl;
 		}*/
 			double sum = 0;
-		//if ((*it)->get_found() == true) {
-		//	sum = (*it)->get_pagerank()/(double((*it)->outgoing()+1.0));
-		//}
-		//else {
+		if ((*it)->get_found() == true) {
+			sum = (*it)->get_pagerank()/(double((*it)->outgoing()+1.0));
+		}
+		else {
 			sum = (*it)->get_pagerank()/(double((*it)->outgoing()));
-		//}
+		}
 		//double sum = (*it)->get_pagerank()/(double((*it)->outgoing()));
 		MySetWebPage inc = (*it)->incoming_links();
-		cout << "starting sum " << endl;
+		
 		//cout << (*it)->incoming_links().filename() << "  " << (*it)->outgoing_links().filename() << endl;
 		if ((*it)->incoming() != 0) {
 			for (it3 = inc.begin(); it3 != inc.end(); ++it3) {
@@ -842,13 +855,13 @@ void MainWindow::iteratepagerank(std::vector<WebPage*> rank) {
 					if ((*it4)->filename() == (*it3)->filename()) {
 						if((*it)->filename() != (*it3)->filename()) {
 						
-							//if ((*it3)->get_found() == true) {
-							//	sum += ((*it3)->get_pagerank())/(double((*it3)->outgoing()+1.0));
+							if ((*it3)->get_found() == true) {
+								sum += ((*it3)->get_pagerank())/(double((*it3)->outgoing()+1.0));
 						
-					//		}
-					//		else {
+							}
+							else {
 								sum += ((*it3)->get_pagerank())/(double((*it3)->outgoing()));
-					//		}
+							}
 						}
 					}
 				}

@@ -11,8 +11,8 @@ using namespace std;
 
 
 
-void build_index(std::set<string> links, string output);
-void parse(string filename, std::set<string> &allLinks);
+void build_index(std::vector<string> links, string output);
+void parse(string filename, std::set<string> &allLinks, std::vector<string> &outie);
 
 
 std::map<string, string> crawl(string input, std::map<string, string> &items) {
@@ -75,7 +75,7 @@ std::map<string, string> crawl(string input, std::map<string, string> &items) {
 
 			else if((isalpha(temp[i]) && useful == true) || ((temp[i] >= 48) && (temp[i] <= 57) && useful == true) || ((temp[i] == '/' || temp[i] == '.') && useful == true)) {
 				value += temp[i];
-				cout << value << endl;
+				
 			}
 			else if((isalpha(temp[i]) && useful == false) || (((temp[i] == '_' || temp[i] == '/' || temp[i] == '.') && isalpha(temp[i+1]) && useful == false))) {
 				parameter += temp[i];
@@ -85,7 +85,7 @@ std::map<string, string> crawl(string input, std::map<string, string> &items) {
 		}
 		if (invalid == false && useful == true && !value.empty()) {
 					useful = false;
-					cout << parameter << "  " << value << endl;
+					
 					items.insert(std::make_pair(parameter, value));
 					
 					parameter.clear();
@@ -100,36 +100,49 @@ std::map<string, string> crawl(string input, std::map<string, string> &items) {
 	
 	string final;
 	final = items["OUTPUT_FILE"];
+	//cout << final << endl;
 	ifstream index;
 	index.open(check.c_str());
+	ofstream alllinks;
+	alllinks.open(final.c_str());
+	
 	//ofstream alllinks(output);
 	std::set<string> links;
+	std::vector<string> outie;
 
+//alllinks << "file" << endl;
 	while (index >> file) {
 
 		if (links.find(file) == links.end()) {
 			links.insert(file);
-			parse(file, links);
+			outie.push_back(file);
+			//cout << file << endl;
+			//alllinks << file << "\n";
+			// alllinks.write(file.c_str(),file.size());
+			//cout << "got here" << endl;
+			parse(file, links, outie);
+
+
 		}
 		
 	}
-	build_index(links, final);
-
+	build_index(outie, final);
+	alllinks.close();
 	index.close();
 	return items;
 	
 }
 
 
-void build_index(std::set<string> links, string output) {
+void build_index(std::vector<string> links, string output) {
 	ofstream alllinks;
 	alllinks.open(output.c_str());
 	
 	
-	std::set<string>::iterator it;
+	std::vector<string>::iterator it;
 	
 	for (it = links.begin(); it != links.end(); ++it) {
-		alllinks << *it << endl;
+		alllinks << *it << "\n";
 		
 	}
 	
@@ -137,8 +150,10 @@ void build_index(std::set<string> links, string output) {
 
 }
 
-void parse(string filename, std::set<string> &allLinks) {
-	
+void parse(string filename, std::set<string> &allLinks, std::vector<string> &outie) {
+	//ofstream alllinks;
+	//alllinks.open(output.c_str());
+	//alllinks << filename << "\n";
 	ifstream text;
 	text.open(filename.c_str());
 
@@ -187,8 +202,8 @@ void parse(string filename, std::set<string> &allLinks) {
 				//std::set<string>::iterator it;
 				if (allLinks.find(enter) == allLinks.end()) {
 					allLinks.insert(enter);
-					
-					parse(enter, allLinks);
+					outie.push_back(enter);
+					parse(enter, allLinks, outie);
 				}
 
 				//parse(enter, allLinks);
@@ -227,6 +242,7 @@ void parse(string filename, std::set<string> &allLinks) {
 			}
 		}
 	}
+	//alllinks.close();
 }
 
 int main(int argc, char* argv[])
