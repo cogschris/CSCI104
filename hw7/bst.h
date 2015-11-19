@@ -101,7 +101,8 @@ class BinarySearchTree {
     printRoot (root);
     std::cout << "\n";
   }
-    
+
+  
   /**
    * An In-Order iterator
    *  !!! You must implement this !!!
@@ -111,7 +112,9 @@ class BinarySearchTree {
     /**
      * Initialize the internal members of the iterator
      */
-    iterator(Node<KeyType,ValueType>* ptr);
+    iterator(Node<KeyType,ValueType>* ptr) {
+    	curr = ptr;
+    }
     
     std::pair<const KeyType,ValueType>& operator*()
       { return curr->getItem();  }
@@ -124,7 +127,7 @@ class BinarySearchTree {
      *  as 'rhs'
      */
     bool operator==(const iterator& rhs) const {
-    	return *this->getItem()->getValue() == *rhs->getItem()->getValue();
+    	return curr == rhs->curr;
     }
     
     /**
@@ -132,7 +135,7 @@ class BinarySearchTree {
      *  as 'rhs'
      */
     bool operator!=(const iterator& rhs) const {
-    	return *this->getItem()->getValue() != *rhs->getItem()->getValue();
+    	return (curr != rhs->curr);
     }
     
     /**
@@ -140,44 +143,29 @@ class BinarySearchTree {
      */
     iterator& operator++() {
     	Node<KeyType, ValueType> *temp;
-    	temp = this;
-    	//bool up = true;
-    	//bool super_up = false;
-    	while (temp->getValue > iterator->getValue) {
-    	/*	if (up == true && super_up == false) {
-    			iterator = iterator->_parent;
-    			up = false;
-    		}
-    		else if(up == false && super_up == false) {
-    			iterator = iterator->_right;
-    			super_up = true;
-    			up = true;
-    		}
-    		else if(super_up == true) {
-    			iterator = iterator->_parent;
-    			iterator = iterator->_parent;
-    			super_up = false;
-    			 
-    		}*/
+    	temp = curr;
+    	
+    	while (temp->getKey() >= curr->getKey()) {
+    	
     		bool move = false;
-    		while (iterator->right != NULL && (temp->getValue > iterator->right->getValue)) {
-    			while (iterator->left != NULL && (temp->getValue > iterator->left->getValue)) {
-    				iterator = iterator->left;
+    		while (((curr->getRight() != NULL) || (curr->getLeft() != NULL)) && ((temp->getKey() > curr->getRight()->getKey()) || temp->getKey() > curr->getLeft()->getKey())) {
+    			while (curr->getLeft() != NULL && (temp->getKey() > curr->getLeft()->getKey())) {
+    				curr = curr->getLeft();
     			}
     			move = true;
-    			iterator = iterator->right;
+    			if (curr->getRight() != NULL) {
+    				curr = curr->getRight();
+    			}
     		}
     		if(move == false) {
-    			iterator = this->_parent;
+    			curr = curr->getParent();
     		}
     	}
-    	//while (iterator->_left != NULL) {
-    	//	iterator = iterator->_left;
-    	//}
-    return iterator;
+    	
+    return iterator(curr);
     }
     
-  protected:
+
     Node<KeyType, ValueType>* curr;
     //you are welcome to add any necessary variables and helper functions here.
 
@@ -188,31 +176,31 @@ class BinarySearchTree {
    */
   iterator begin() {
   	Node<KeyType, ValueType> *cool;
-  	Node<KeyType, ValueType> *temp;
-  	cool = temp = root;
-  	temp = temp->_left;
-  	while(temp != NULL) {
-  		cool = cool->_left;
-  		temp = temp->_left;
+  	
+  	cool = root;
+  	
+  	while(cool->getLeft() != NULL) {
+  		cool = cool->getLeft();
+  		
   	}
-  	iterator(cool) powe;
-  	return powe;
+  	
+  	return iterator(cool);
   } 
 
   /**
    * Returns an iterator whose value means INVALID
    */
   iterator end() {
-  	Node<KeyType, ValueType> *cool;
+  /*	Node<KeyType, ValueType> *cool;
   	
-  	cool = temp = root;
+  	cool = root;
   	
-  	while(cool != NULL) {
-  		cool = cool->_left;
+  	while(cool->getRight() != NULL) {
+  		cool = cool->getRight();
   		
   	}
-  	iterator(cool) powe;
-  	return powe;
+  	*/
+  	return NULL;
   }
 
   /**
