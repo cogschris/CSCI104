@@ -84,7 +84,40 @@ class BinarySearchTree {
    * Constructor
    */
   BinarySearchTree () { root = NULL; }
+  /*void insert(const std::pair<const KeyType, ValueType> new_item) {
+  this->root = insertInTree(NULL, this->root, new_item);
+     
+     
+     
 
+  }
+  Node<KeyType, ValueType>* insertInTree(Node<KeyType, ValueType>* parent, Node<KeyType, ValueType>* node, const std::pair<const KeyType, ValueType> new_item) {
+    if(node == NULL) {
+      
+      Node<KeyType, ValueType>* star = new Node<KeyType, ValueType>(new_item.first, new_item.second, parent);
+      
+     // if (this->root == NULL) {
+
+       // static_cast<RedBlackNode<KeyType,ValueType>*>(star)->setColor(black);
+      //}
+      //else {
+
+        //static_cast<RedBlackNode<KeyType,ValueType>*>(star)->setColor(red);
+        
+        //fixTree(star);
+      
+      return star;
+    }   
+    // go left
+    if(new_item.first < node->getKey()) {
+        node->setLeft(insertInTree(node, node->getLeft(), new_item));
+    }
+    else {
+        node->setRight(insertInTree(node, node->getRight(), new_item));
+    }
+  
+    return node;
+  }*/
   /**
    * Destructor
    */
@@ -96,7 +129,7 @@ class BinarySearchTree {
    * It will denote subtrees in [] brackets.
    *  This could be helpful if you want to debug your functions. 
    */  
-  void print () const
+  virtual void print () const
   { 
     printRoot (root);
     std::cout << "\n";
@@ -127,7 +160,7 @@ class BinarySearchTree {
      *  as 'rhs'
      */
     bool operator==(const iterator& rhs) const {
-    	return curr == rhs->curr;
+    	return this->curr == rhs.curr;
     }
     
     /**
@@ -135,7 +168,7 @@ class BinarySearchTree {
      *  as 'rhs'
      */
     bool operator!=(const iterator& rhs) const {
-    	return (curr != rhs->curr);
+    	return (this->curr != rhs.curr);
     }
     
     /**
@@ -162,7 +195,7 @@ class BinarySearchTree {
     		}
     	}
     	
-    return iterator(curr);
+    return *this;
     }
     
 
@@ -191,7 +224,7 @@ class BinarySearchTree {
    * Returns an iterator whose value means INVALID
    */
   iterator end() {
-  /*	Node<KeyType, ValueType> *cool;
+  	Node<KeyType, ValueType> *cool;
   	
   	cool = root;
   	
@@ -199,8 +232,8 @@ class BinarySearchTree {
   		cool = cool->getRight();
   		
   	}
-  	*/
-  	return NULL;
+  	
+  	return iterator(cool);
   }
 
   /**
@@ -239,7 +272,7 @@ class BinarySearchTree {
   /**
    * Helper function to print the tree's contents
    */
-  void printRoot (Node<KeyType, ValueType> *r) const
+  virtual void printRoot (Node<KeyType, ValueType> *r) const
   {
     if (r != NULL)
       {
@@ -250,6 +283,7 @@ class BinarySearchTree {
 	std::cout << "]";
       }
   }
+
   
   /**
    * Helper function to delete all the items
