@@ -113,7 +113,7 @@ public:
   Node<KeyType, ValueType>* insertInTree(Node<KeyType, ValueType>* parent, Node<KeyType, ValueType>* node, const std::pair<const KeyType, ValueType> new_item, Node<KeyType, ValueType>*& check) {
     
     if(node == NULL) {
-      std::cout << "shit" << std::endl;
+      
       node = check;
       copy = node;
       node->setParent(parent);
@@ -140,27 +140,9 @@ public:
   void fixTree(Node<KeyType, ValueType>* cool) {
       
       /*Node<KeyType, ValueType>* temp = cool;
-      std::cout << "fuck" << std::endl;
-      if (static_cast<RedBlackNode<KeyType,ValueType>*>(temp->getParent())->getColor() == red) {
-        std::cout << "shit" << std::endl;
-        if (temp->getParent()->getParent() != NULL) {
+      
           
-          if (static_cast<RedBlackNode<KeyType,ValueType>*>(temp->getParent()->getParent()->getLeft())->getColor() == red && static_cast<RedBlackNode<KeyType,ValueType>*>(temp->getParent()->getParent()->getRight())->getColor() == red) {
-            std::cout << "shithead" << std::endl;
-            reColor(cool); 
-
-          }
-
-          else {
-            if (temp->getParent()->getParent()->getLeft() != temp->getParent()) {
-              std::cout << "shithead" << std::endl;
-              rotateLeft(cool);
-            }
-            else {
-              std::cout << "shithead" << std::endl;
-              rotateRight(cool);
-            }
-          }
+          
         }
         else {
            if (temp->getParent()->getParent()->getLeft() != temp->getParent()) {
@@ -323,41 +305,35 @@ std::cout << "right" << std::endl;
    
 
 
-      newleft->setLeft(righttemp);
-      righttemp->setRight(newleft->getLeft());
-      if (righttemp->getRight() == NULL) {
-        righttemp->getParent()->setRight(newleft);
+      
+      //righttemp->setLeft(newleft->getRight());
+      if (newleft->getRight() != NULL) {
+        righttemp->setLeft(newleft->getRight());
+        newleft->getRight()->setParent(righttemp);
+      }
+      else{
+        righttemp->setLeft(NULL);
       }
       newleft->setParent(righttemp->getParent());
       if (newleft->getParent() == NULL) {
-        righttemp = this->root;
+        this->root = newleft;
 
       }
       else if(newleft == newleft->getParent()->getRight()) {
-        righttemp = newleft->getParent()->getRight();
+        righttemp ->getParent()->setRight(newleft);
       }
       else {
-        righttemp = newleft->getParent()->getLeft();
+        righttemp ->getParent()->setLeft(newleft);
       }
 
-      newleft = righttemp->getRight();
-      //std::cout << newleft->getParent() << std::endl;
 
-      
-      righttemp = newleft->getParent();
-
-
-
-   //std::cout << "command "<<righttemp->getRight()->getKey() << "  " ;
-   //std::cout<<"command " << righttemp->getRight()->getKey()<< std::endl;
-        //fixTree(cool->getParent());
-    std::cout<<" halp" <<cool->getKey() << "   " << cool->getParent()->getKey() << std:: endl;
+   
+    //std::cout<<" halp" <<cool->getKey() << "   " << cool->getParent()->getKey() << std:: endl;
     fixTree(cool->getParent());
   }
 
 void rotateLeft(Node<KeyType, ValueType>* cool) {
-  std::cout << "left" << std::endl;std::cout << "right" << std::endl;
-    std::cout << "left "<<cool->getKey() << std::endl;
+  
     //Node<KeyType, ValueType>* total_parent = cool->getParent()->getParent();
     Node<KeyType, ValueType>* newleft = cool->getParent();
     Node<KeyType, ValueType>* righttemp = cool->getParent()->getParent();
@@ -406,12 +382,7 @@ void rotateLeft(Node<KeyType, ValueType>* cool) {
       //newleft->setParent(cool);
       //cool->setLeft(newleft);
       static_cast<RedBlackNode<KeyType,ValueType>*> (newconnect)->setColor(black);
-      std::cout << "black " << newconnect->getKey() << std::endl;
-      static_cast<RedBlackNode<KeyType,ValueType>*> (righttemp)->setColor(red);
-      std::cout << "red " << righttemp->getKey() << std::endl;
       
-      std::cout<< "hello is it me you are looking for" << std::endl;
-    }
     else if (righttemp->getKey() == total_parent->getRight()->getKey()) {
       total_parent->setRight(newconnect);
       newconnect->setParent(total_parent);
@@ -444,25 +415,25 @@ void rotateLeft(Node<KeyType, ValueType>* cool) {
         //fixTree(cool->getParent());
     
 
-      newleft->setRight(righttemp);
-      righttemp->setLeft(newleft->getRight());
-      if (righttemp->getLeft() == NULL) {
-        righttemp->getParent()->setLeft(newleft);
+      righttemp->setRight(newleft->getLeft());
+      //righttemp->setLeft(newleft->getRight());
+      if (newleft->getLeft() != NULL) {
+        newleft->getLeft()->setParent(righttemp);
       }
       newleft->setParent(righttemp->getParent());
       if (newleft->getParent() == NULL) {
-        righttemp = this->root;
+        this->root = newleft;
 
       }
       else if(newleft == newleft->getParent()->getLeft()) {
-        righttemp = newleft->getParent()->getLeft();
+        righttemp ->getParent()->setLeft(newleft);
       }
       else {
-        righttemp = newleft->getParent()->getRight();
+        righttemp ->getParent()->setRight(newleft);
       }
 
-      newleft = righttemp->getLeft();
-      righttemp = newleft->getParent();
+      //newleft = righttemp->getLeft();
+      //righttemp = newleft->getParent();
 
 
 
