@@ -10,30 +10,32 @@ bool isvalid(std::map<char,int>::iterator it, int color, map<char, int>& key, ma
 
 bool colors(std::map<char,int>::iterator it, map<char, int>& key, map<char, set<char> > neighbor) {
 	//std::map<char,int>::iterator it;
-	cout << "colors" << endl;
+	//cout << it->first << endl;
 	if (it == key.end()) {
 		return true;
 	} 
-
+	std::map<char,int>::iterator temp = it;
+	++it;
 	for (int i = 1; i <= 4; i++) {
-		it->second = i;
-		if (isvalid(it, i, key, neighbor) == true) {
+		temp->second = i;
+		if (isvalid(temp, i, key, neighbor) == true) {
 			
-			if (colors(++it, key, neighbor) == true) {
+			if (colors(it, key, neighbor) == true) {
 				
 				return true;
 			}
 
 			else {
-				it->second = 0;
+				temp->second = 0;
 			}
 
 		}
 		else {
-			it->second = 0;
+			temp->second = 0;
 		}
 		
 	}
+	//cout << it->first << endl;
 	return false;
 }
 
@@ -44,12 +46,12 @@ bool isvalid(std::map<char,int>::iterator it, int color, map<char, int>& key, ma
 	std::set<char> temp = (it3)->second;
 	std::set<char>::iterator it2;
 	for (it2 = temp.begin(); it2 != temp.end(); ++it2) {
-		
+		//int hi = key.find(*it2)->second;
+				//cout << it-> first << "  " <<  color << "    " << hi <<" " << key.find(*it2)->first << endl;
+			
 			if ((key.find(*it2))->second == color) {
 				valid = false;
-				//int hi = key.find(*it2)->second;
-				//cout << color << "    " << hi <<" " << key.find(*it2)->first << endl;
-			}
+				}
 		
 		
 	}
@@ -110,7 +112,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 std::map<char,int>::iterator it=key.begin();
- 
+
 	//int country[countries];
 	if (colors(it, key, neighbor) == true) {
 		std::map<char,int>::iterator it4;
@@ -119,6 +121,8 @@ std::map<char,int>::iterator it=key.begin();
 			
 		}
 		return 0;
-}
+	}
+
+	cout << "Sorry nothing could work" << endl;
 		return 1;
 }
