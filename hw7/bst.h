@@ -211,7 +211,9 @@ class BinarySearchTree {
   	Node<KeyType, ValueType> *cool;
   	
   	cool = root;
-  	
+  	if (cool = NULL){
+  		return iterator(cool);
+  	}
   	while(cool->getLeft() != NULL) {
   		cool = cool->getLeft();
   		
@@ -224,16 +226,8 @@ class BinarySearchTree {
    * Returns an iterator whose value means INVALID
    */
   iterator end() {
-  	Node<KeyType, ValueType> *cool;
-  	
-  	cool = root;
-  	
-  	while(cool->getRight() != NULL) {
-  		cool = cool->getRight();
-  		
-  	}
-  	
-  	return iterator(cool);
+  	iterator it(NULL);
+  	return it;
   }
 
   /**
