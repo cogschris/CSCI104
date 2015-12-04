@@ -13,11 +13,13 @@ class MinHeap {
 
        ~MinHeap ();
 
-       void add (std:string item, int priority);
+       void add (std::string item, int priority);
          /* adds the item to the heap, with the given priority. */
        void trickleUp (int pos);
 
-       const std:string & peek () const;
+       void swap(int init, int place);
+
+       const std::string & peek () const;
          /* returns the element with smallest priority.  If
             multiple items have the smallest priority, it returns
             the string which comes first alphabetically.
@@ -43,7 +45,7 @@ class MinHeap {
       // whatever you need to naturally store things.
       // You may also add helper functions here.
     //HashTable table;
-    vector< <std::pair<std::string, int> > heap;
+    std::vector<std::pair<std::string, int> > heap;
     int size;
     std::pair<std::string, int> temp;
     int tree;
