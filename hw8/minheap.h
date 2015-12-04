@@ -28,6 +28,7 @@ class MinHeap {
             multiple items have the smallest priority, it removes
             the string which comes first alphabetically.
             Throws an exception if the heap is empty. */
+       void trickleDown(int pos);
 
        void update (std::string item, int priority);
          /* updates the priority for the specified element.
@@ -46,6 +47,7 @@ class MinHeap {
     int size;
     std::pair<std::string, int> temp;
     int tree;
+    HashTable track;
 
   };
 #endif
