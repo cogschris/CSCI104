@@ -79,13 +79,13 @@ vector<string> get_cousins(string start, vector<string> terms, vector<string> ch
 			wrong = 2;
 		}
 		else {
-			for (int j = 0; j < terms[i].size(); j++) {
+			for (int j = 0; j < int(terms[i].size()); j++) {
 				if (start[j] != terms[i][j]) {
 					wrong++;
 				}
 			}
 		}
-		if (wrong == 1 && std::find(check.begin(), check.end(), terms[i]) != vector.end()) {
+		if (wrong == 1 && std::find(check.begin(), check.end(), terms[i]) != check.end()) {
 			answers.push_back(terms[i]);
 		}
 	}
@@ -94,12 +94,12 @@ vector<string> get_cousins(string start, vector<string> terms, vector<string> ch
 
 int get_priority(string guy, int step, string end) {
 	int wrong = 0;
-	for (int i = 0; i < end.size(); i++) {
+	for (int i = 0; i < int(end.size()); i++) {
 		if (guy[i] != end[i]) {
 			wrong++;
 		}
 	}
-	return (step+wrong)*(end.size() + 1) + wrong;
+	return (step+wrong)*(int(end.size()) + 1) + wrong;
 }
 
 int main (int argc, char* argv[]) {
@@ -144,12 +144,12 @@ int main (int argc, char* argv[]) {
 	MinHeap openlist(2);
 	vector<string> closedlist;
 	int priority = wrong*(begin.size() + 1) + wrong;
-	cool.add(begin, priority);
+	openlist.add(begin, priority);
 	map<string,string> backtrack;
-	string temp;
+	//string temp;
 	int step = 0;
 	int expansion = 1;
-	while (!openlist.empty()) {
+	while (!openlist.isEmpty()) {
 		step++;
 		temp = openlist.peek();
 		closedlist.push_back(temp);
@@ -159,14 +159,28 @@ int main (int argc, char* argv[]) {
 		}
 
 		vector<string> neighbor = get_cousins(temp, terms, closedlist);
-		for (int i = 0; i < neighbor.size(); i++) {
+		for (int i = 0; i < int(neighbor.size()); i++) {
 			int prio = get_priority(neighbor[i], step, end);
-			openlist.add(std::make_pair(neighbor[i], prio));
+			openlist.add(neighbor[i], prio);
 			expansion++;
-			backtrack.insert(std::pair<string,string>(neighbor[i], temp);
+			backtrack.insert(std::pair<string,string>(neighbor[i], temp));
 		}
 	}
 
+	vector<string> final;
+
+	string temps = end;
+	while (temps != begin) {
+		final.push_back(temps);
+		temps = backtrack[temps];
+	}
+	cout << "Here is the conversion:" << endl;
+	cout << begin;
+	for (int i = int(final.size()) - 1; i >= 0; i--) {
+		cout << " " << final[i];
+	}
+
+	cout << endl << "Expansions: " << expansion << endl;
 
 
 

@@ -1,5 +1,6 @@
 #include "minheap.h"
 #include <iostream>
+#include <algorithm>
 
 
 MinHeap::MinHeap(int d) {

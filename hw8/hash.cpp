@@ -31,8 +31,8 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 	int key = modding%size;
 	for (int i = 0; i < int(table[key]->size()); i++) {
 		if (new_item.second == (*table[key])[i].second) {
-			//throw excetion
-			return;
+			throw 0;
+			
 		}
 	}
 
@@ -45,8 +45,8 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 		if (count/size <= 1) {
 			for (int i = 0; i < int(table[key]->size()); i++) {
 				if (new_item.second == (*table[key])[i].second) {
-					//throw excetion
-					return;
+					throw 0;
+					
 				}
 			}	
 			table[temp]->push_back(new_item);
@@ -92,7 +92,7 @@ const int& HashTable::find(std::string key) const {
 		search = orig*multiply + search;
 
 	}
-	//throw exception here
+	throw 0;
 	//return 0;
 }
 
