@@ -16,7 +16,10 @@ HashTable::HashTable() {
 }
 
 HashTable::~HashTable() {
-
+	//for(int i = 0; i < size; i++) {
+	//	delete table[i];
+	//}
+	//delete [] table;
 }
 
 void HashTable::add(std::pair<std::string, int> new_item) {
