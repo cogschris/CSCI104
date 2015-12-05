@@ -30,7 +30,8 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 	}
 	int key = modding%size;
 	for (int i = 0; i < int(table[key]->size()); i++) {
-		if (new_item.second == (*table[key])[i].second) {
+		if (new_item.first == (*table[key])[i].first) {
+			 
 			throw 0;
 			
 		}
@@ -44,7 +45,7 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 		
 		if (count/size <= 1) {
 			for (int i = 0; i < int(table[key]->size()); i++) {
-				if (new_item.second == (*table[key])[i].second) {
+				if (new_item.first == (*table[key])[i].first) {
 					throw 0;
 					
 				}
@@ -56,10 +57,11 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 		start++;
 		temp = start*orig + key;
 	}
+	//std::cout << "fucking hell crap shit   " << std:: endl;
 	if (insert == false) {
 		resize();
 		//temp = (start+1)*size + key;
-		std::cout << temp << "   " << size << std::endl;
+		//std::cout << temp << "   " << size << std::endl;
 		table[temp]->push_back(new_item);
 		count++;
 			insert = true;
@@ -126,19 +128,20 @@ void HashTable::remove (std::string key) {
 
 void HashTable::update (std::pair<std::string, int> new_value) {
 	std::string key = new_value.first;
-	int key_size = key.size();
+	int key_size = int(key.size());
 	long long int modding = 0;
 
 	for (int i = 0; i < key_size; i++) {
-		if (key[i] < 94) {
-			key[i] += 32;
-		}
+		//if (key[i] < 94) {
+		//	key[i] += 32;
+		//}
 		modding += (key[i]-97) * pow(29, key_size-1-i);
 	}
 	int search = modding%size;
 
 	int multiply = 0;
 	bool leave = false;
+	//std::cout << new_value.first << "  updated yay  " << new_value.second << std::endl;
 	while (search <= orig && leave == false) {
 
 		for (int i = 0; i < int(table[search]->size()); i++) {

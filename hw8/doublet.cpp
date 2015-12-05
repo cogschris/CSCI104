@@ -8,6 +8,10 @@
 
 using namespace std;
 
+//struct Node {
+
+//};
+
 //so basiclaly going to make a function wehre i search through and fin
 //words that are closer to the target, and then Ill make note of them
 //and then at the very end of the loop ill calculate out all their 
@@ -74,6 +78,7 @@ void converting(string look, string end, string terms[], MinHeap &store, int pri
 vector<string> get_cousins(string start, vector<string> terms, vector<string> check) {
 	//cout << "damn to hell" << endl;
 	vector<string> answers;
+	//cout << start << "    okay     ";
 	for (int i = 0; i < int(terms.size()); i++) {
 		int wrong = 0;
 		if (start.size() != terms[i].size()) {
@@ -89,22 +94,31 @@ vector<string> get_cousins(string start, vector<string> terms, vector<string> ch
 		}
 		//cout << terms[i] << "  " << wrong << endl;
 		if (wrong == 1 && std::find(check.begin(), check.end(), terms[i]) == check.end()) {
-			//cout << terms[i] << endl;
+			//cout << terms[i] << " i push this  " ;
 			answers.push_back(terms[i]);
 			
 		}
+		
 	}
+	
+	
 	return answers;
 }
 
-int get_priority(string guy, int step, string end) {
+int get_priority(string guy, string ha, string end) {
 	int wrong = 0;
+	int away = 0;
 	for (int i = 0; i < int(end.size()); i++) {
 		if (guy[i] != end[i]) {
 			wrong++;
 		}
 	}
-	return (step+wrong)*(int(end.size()) + 1) + wrong;
+	for (int i = 0; i < int(ha.size()); i++) {
+		if (guy[i] != ha[i]) {
+			away++;
+		}
+	}
+	return (away+wrong)*(int(end.size()) + 1) + wrong;
 }
 
 int main (int argc, char* argv[]) {
@@ -143,45 +157,77 @@ int main (int argc, char* argv[]) {
 				temp[j] = temp[j] + 32;
 			}
 		}
-		terms.push_back(temp);
+		if (std::find(terms.begin(), terms.end(), temp) == terms.end()) {
+			terms.push_back(temp);
+		}
 	}
 	
 	MinHeap openlist(2);
 	vector<string> closedlist;
+	vector<string> added;
 	int priority = wrong*(begin.size() + 1) + wrong;
 	openlist.add(begin, priority);
+	added.push_back(begin);
 	temp.clear();
 	map<string,string> backtrack;
+	map<string,int> priorities;
+	priorities.insert(std::pair<string,int>(begin, priority));
 	//string temp;
-	int step = 0;
+	//int step = 0;
 	int expansion = 1;
 	//cout << openlist.isEmpty() << endl;
 	while (!openlist.isEmpty()) {
-
-		step++;
+		
+		
 		temp = openlist.peek();
 		closedlist.push_back(temp);
 		openlist.remove();
+		//cout << temp << "  i check this" << endl;
 		if (temp == end) {
+			cout << "I broke the code" << endl;
 			break;
 		}
 
+			if (temp == "coves") {
+					cout << "loaded it" << endl;
+				}
 		vector<string> neighbor = get_cousins(temp, terms, closedlist);
 		for (int i = 0; i < int(neighbor.size()); i++) {
-			int prio = get_priority(neighbor[i], step, end);
-			openlist.add(neighbor[i], prio);
+			
+			int prio = get_priority(neighbor[i], begin, end);
+			cout << neighbor[i] << "    " << prio << endl;
+			if (std::find(added.begin(), added.end(), neighbor[i]) == added.end()) {
+				//cout << "so the real ones  " <<neighbor[i] << "    " << prio << endl;
+				openlist.add(neighbor[i], prio);
+				if (neighbor[i] == "coves") {
+					cout << "hit it" << endl;
+				}
+				added.push_back(neighbor[i]);
+				priorities.insert(std::pair<string,int>(neighbor[i], prio));
+			}
+			else {
+				cout << "well then" << prio << "   " << priorities[neighbor[i]] << endl;
+				if (prio < priorities[neighbor[i]]) {
+					priorities[neighbor[i]] = prio;
+					openlist.update(neighbor[i], priorities[neighbor[i]]);
+
+				}
+			}
 			expansion++;
-			backtrack.insert(std::pair<string,string>(neighbor[i], temp));
+
+				backtrack.insert(std::pair<string,string>(neighbor[i], temp));
+				//cout << "Hello!  "  << neighbor[i] << "     " << temp << endl;
 		}
 	}
-
+cout << "oops i ened" << endl;
 	vector<string> final;
 
 	string temps = end;
 	while (temps != begin) {
-		//cout << "crap"<< endl;
+		
 		final.push_back(temps);
 		temps = backtrack[temps];
+		cout << temps;
 	}
 	cout << "Here is the conversion:" << endl;
 	cout << begin;

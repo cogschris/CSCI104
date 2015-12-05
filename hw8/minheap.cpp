@@ -62,33 +62,46 @@ const std::string & MinHeap::peek() const {
  }
 
  void MinHeap::trickleDown(int pos) {
- 	std::cout << "damn" << std::endl;
+ 	//coustd::cout << pos << "   " << size << "damn crap " <<std::endl;
+ 	int place = 0;
+ 	bool change = false;
  	if (tree*pos + 1 < size) {
- 		int compare = heap[pos].second;
+ 		int compare = heap[pos*tree + 1].second;
+ 		
  		for (int i = 1; i <= tree; i++) {
  			if (compare > heap[pos*tree + i].second) {
  				compare = heap[pos*tree + i].second;
+ 				place = pos*tree+i;
+ 				change = true;
  			}
  			else if (compare == heap[pos*tree+i].second) {
  				if (heap[pos].first > heap[pos*tree + i].first ) {
  					compare = heap[pos*tree + i].second;
+ 					place = pos*tree+i;
+ 					change = true;
  				}
  			}
  		}
- 		if (heap[compare].second < heap[pos].second) {
-			swap (compare, pos);
-			track.update(std::make_pair(heap[compare].first, (compare)/tree));
+ 	}
+ 		//std::cout <<"um what " << compare << " damn son" << std::endl;
+ 		//std::cout << "help" <<  heap[place].first << "    " << heap[pos].first << std::endl;
+ 		if (change == true) {
+			swap (place, pos);
+			//std::string
 			track.update(std::make_pair(heap[pos].first, (pos)/tree));
-			trickleDown (compare);
+			track.update(std::make_pair(heap[place].first, (place)/tree));
+			
+			trickleDown (place);
 		}
 		
 
- 	}
+ 	
  }
 
  void MinHeap::swap(int init, int place) {
  	std::pair<std::string, int> tempo = heap[init];
  	heap[init] = heap[place];
+ 	//std::cout << tempo.first << "fucking hell " << std::endl;
  	heap[place] = tempo;
  }
 
