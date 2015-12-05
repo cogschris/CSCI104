@@ -1,11 +1,13 @@
 #include "minheap.h"
 #include <iostream>
 #include <algorithm>
+#include <stdexcept>
 
 
 MinHeap::MinHeap(int d) {
 	if (d < 2) {
 		std::cout << "Sorry!" << std::endl;
+		throw std::invalid_argument("///Heap is Empty///");
 	}
 	tree = d;
 	//heap = new std::vector<std::string>[d+1];
@@ -36,7 +38,7 @@ void MinHeap::trickleUp (int pos) {
 		trickleUp((pos-1)/tree);
 	}
 	else if (pos > 0 && heap[pos].second == heap[(pos-1)/tree].second) {
-		if (heap[pos].first < heap[(pos-1)/tree].first) {
+		if (heap[pos].first< heap[(pos-1)/tree].first) {
 			swap (pos, (pos-1)/tree);
 			track.update(std::make_pair(heap[(pos-1)/tree].first, (pos-1)/tree));
 			track.update(std::make_pair(heap[pos].first, (pos)));
@@ -48,13 +50,16 @@ void MinHeap::trickleUp (int pos) {
 
 const std::string & MinHeap::peek() const {
 	if (size == 0) {
-		throw 0;
+		throw std::invalid_argument("///Heap is Empty///");
 	}
 
 	return heap[0].first;
 }
 
  void MinHeap::remove() {
+ 	if (size == 0) {
+		throw std::invalid_argument("///Heap is Empty///");
+	}
  	swap (0, size-1);
  	heap.pop_back(); 
 	size --; 
@@ -106,6 +111,9 @@ const std::string & MinHeap::peek() const {
  }
 
  void MinHeap::update(std::string item, int priority) {
+ 	if (size == 0) {
+		throw std::invalid_argument("///Heap is Empty///");
+	}
  	int found = 0;
  	found = track.find(item);
  	if (heap[found].second > priority) {

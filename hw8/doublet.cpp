@@ -114,7 +114,7 @@ int get_priority(string guy, string begin, string end, map<string,string> parent
 		}
 	}
 	while (par != begin) {
-		cout << "shiiiiiit" << endl;
+		//cout << "shiiiiiit" << endl;
 		par = parents[par];
 		away++;
 	}
@@ -174,52 +174,51 @@ int main (int argc, char* argv[]) {
 	priorities.insert(std::pair<string,int>(begin, priority));
 	//string temp;
 	//int step = 0;
-	int expansion = 1;
+	int expansion = 0;
 	//cout << openlist.isEmpty() << endl;
 	while (!openlist.isEmpty()) {
 		
 		
 		temp = openlist.peek();
 		closedlist.push_back(temp);
+		expansion++;
+		//cout << temp << " "; 
 		openlist.remove();
 		//cout << temp << "  i check this" << endl;
 		if (temp == end) {
-			cout << "I broke the code" << endl;
+			//cout << "I broke the code" << endl;
 			break;
 		}
 
-			if (temp == "coves") {
-					cout << "loaded it" << endl;
-				}
+			
 		vector<string> neighbor = get_cousins(temp, terms, closedlist);
 		for (int i = 0; i < int(neighbor.size()); i++) {
 			
 			int prio = get_priority(neighbor[i], begin, end, backtrack, temp);
-			cout << neighbor[i] << "    " << prio << endl;
+			//cout << neighbor[i] << "    " << prio << endl;
 			if (std::find(added.begin(), added.end(), neighbor[i]) == added.end()) {
 				//cout << "so the real ones  " <<neighbor[i] << "    " << prio << endl;
+				
 				openlist.add(neighbor[i], prio);
-				if (neighbor[i] == "coves") {
-					cout << "hit it" << endl;
-				}
+				
 				added.push_back(neighbor[i]);
 				priorities.insert(std::pair<string,int>(neighbor[i], prio));
+				backtrack.insert(std::pair<string,string>(neighbor[i], temp));
 			}
 			else {
-				cout << "well then" << prio << "   " << priorities[neighbor[i]] << endl;
+				//cout << "well then" << prio << "   " << priorities[neighbor[i]] << endl;
 				if (prio < priorities[neighbor[i]]) {
 					priorities[neighbor[i]] = prio;
 					openlist.update(neighbor[i], priorities[neighbor[i]]);
-
+					backtrack[neighbor[i]] = temp;
 				}
 			}
-			expansion++;
+			//expansion++;
 
-				backtrack.insert(std::pair<string,string>(neighbor[i], temp));
+				
 				//cout << "Hello!  "  << neighbor[i] << "     " << temp << endl;
 		}
 	}
-cout << "oops i ened" << endl;
 	vector<string> final;
 
 	string temps = end;
@@ -227,7 +226,7 @@ cout << "oops i ened" << endl;
 		
 		final.push_back(temps);
 		temps = backtrack[temps];
-		cout << temps;
+		//cout << temps;
 	}
 	cout << "Here is the conversion:" << endl;
 	cout << begin;
@@ -236,6 +235,7 @@ cout << "oops i ened" << endl;
 	}
 
 	cout << endl << "Expansions: " << expansion << endl;
+	//cout << "maps" << backtrack.size() << endl;
 
 
 

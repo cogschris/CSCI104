@@ -2,6 +2,8 @@
 #include <string>
 #include <cmath>
 #include <iostream>
+#include <stdexcept>
+
 
 HashTable::HashTable() {
 	size = 31;
@@ -32,7 +34,7 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 	for (int i = 0; i < int(table[key]->size()); i++) {
 		if (new_item.first == (*table[key])[i].first) {
 			 
-			throw 0;
+			throw std::invalid_argument("///Just Invalid///");
 			
 		}
 	}
@@ -46,7 +48,7 @@ void HashTable::add(std::pair<std::string, int> new_item) {
 		if (count/size <= 1) {
 			for (int i = 0; i < int(table[key]->size()); i++) {
 				if (new_item.first == (*table[key])[i].first) {
-					throw 0;
+					throw std::invalid_argument("///Just Invalid///");
 					
 				}
 			}	
@@ -94,7 +96,7 @@ const int& HashTable::find(std::string key) const {
 		search = orig*multiply + search;
 
 	}
-	throw 0;
+	throw std::invalid_argument("///Just Invalid///");
 	//return 0;
 }
 
@@ -157,9 +159,9 @@ void HashTable::update (std::pair<std::string, int> new_value) {
 }
 
 void HashTable::resize() {
-	std::cout << "fucking resize" << std::endl;
+	//std::cout << "fucking resize" << std::endl;
 	std::vector< std::pair<std::string, int> >  *temp;
-	std::cout << size << std::endl;
+	//std::cout << size << std::endl;
 	temp = new std::vector< std::pair<std::string, int> >[size];
 	for(int i = 0; i < size; i++) {
 		temp[i] = *table[i];
@@ -177,7 +179,7 @@ void HashTable::resize() {
 	for(int i = size; i < size*2 + 1; i++) {
 		table[i] = new std::vector<std::pair<std::string, int> >;
 	}
-	std::cout << size << std::endl;
+	//std::cout << size << std::endl;
 	//for(int i = 0; i < size; i++) {
 	//	delete temp[i];
 	//}
