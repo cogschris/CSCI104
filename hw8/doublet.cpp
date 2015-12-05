@@ -76,9 +76,9 @@ void converting(string look, string end, string terms[], MinHeap &store, int pri
 */
 
 vector<string> get_cousins(string start, vector<string> terms, vector<string> check) {
-	//cout << "damn to hell" << endl;
+	
 	vector<string> answers;
-	//cout << start << "    okay     ";
+	
 	for (int i = 0; i < int(terms.size()); i++) {
 		int wrong = 0;
 		if (start.size() != terms[i].size()) {
@@ -114,7 +114,7 @@ int get_priority(string guy, string begin, string end, map<string,string> parent
 		}
 	}
 	while (par != begin) {
-		//cout << "shiiiiiit" << endl;
+		
 		par = parents[par];
 		away++;
 	}
@@ -130,6 +130,10 @@ int main (int argc, char* argv[]) {
 	int wrong = 0;
 	string begin = argv[1];
 	string end = argv[2];
+	if (begin.size() != end.size()) {
+		cout<< "Make sure your stuff are the same lengths!" << endl;
+		return 1;
+	}
 	for (int j = 0; j < int(begin.size()); j++) {
 		if (begin[j] < 90) {
 			begin[j] = begin[j] + 32;
@@ -205,18 +209,15 @@ int main (int argc, char* argv[]) {
 				priorities.insert(std::pair<string,int>(neighbor[i], prio));
 				backtrack.insert(std::pair<string,string>(neighbor[i], temp));
 			}
-			else {
+			else if (std::find(added.begin(), added.end(), neighbor[i]) != added.end()) {
 				//cout << "well then" << prio << "   " << priorities[neighbor[i]] << endl;
 				if (prio < priorities[neighbor[i]]) {
 					priorities[neighbor[i]] = prio;
 					openlist.update(neighbor[i], priorities[neighbor[i]]);
-					backtrack[neighbor[i]] = temp;
+					//backtrack[neighbor[i]] = temp;
 				}
 			}
-			//expansion++;
-
-				
-				//cout << "Hello!  "  << neighbor[i] << "     " << temp << endl;
+			
 		}
 	}
 	vector<string> final;
@@ -239,6 +240,6 @@ int main (int argc, char* argv[]) {
 
 
 
-
+file.close();
 return 0;
 }

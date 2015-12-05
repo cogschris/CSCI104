@@ -67,7 +67,7 @@ const std::string & MinHeap::peek() const {
  }
 
  void MinHeap::trickleDown(int pos) {
- 	//coustd::cout << pos << "   " << size << "damn crap " <<std::endl;
+ 	
  	int place = 0;
  	bool change = false;
  	if (tree*pos + 1 < size) {
@@ -88,8 +88,7 @@ const std::string & MinHeap::peek() const {
  			}
  		}
  	}
- 		//std::cout <<"um what " << compare << " damn son" << std::endl;
- 		//std::cout << "help" <<  heap[place].first << "    " << heap[pos].first << std::endl;
+ 		
  		if (change == true) {
 			swap (place, pos);
 			//std::string
@@ -106,17 +105,18 @@ const std::string & MinHeap::peek() const {
  void MinHeap::swap(int init, int place) {
  	std::pair<std::string, int> tempo = heap[init];
  	heap[init] = heap[place];
- 	//std::cout << tempo.first << "fucking hell " << std::endl;
+ 	
  	heap[place] = tempo;
  }
 
  void MinHeap::update(std::string item, int priority) {
+ 	//std::cout << "here" << std::endl;
  	if (size == 0) {
 		throw std::invalid_argument("///Heap is Empty///");
 	}
  	int found = 0;
  	found = track.find(item);
- 	if (heap[found].second > priority) {
+ 	if (heap[found].second < priority) {
  		heap[found].second = priority;
  		trickleUp(found);
  	}
