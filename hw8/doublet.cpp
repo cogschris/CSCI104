@@ -105,18 +105,18 @@ vector<string> get_cousins(string start, vector<string> terms, vector<string> ch
 	return answers;
 }
 
-int get_priority(string guy, string ha, string end) {
+int get_priority(string guy, string begin, string end, map<string,string> parents, string par) {
 	int wrong = 0;
-	int away = 0;
+	int away = 1;
 	for (int i = 0; i < int(end.size()); i++) {
 		if (guy[i] != end[i]) {
 			wrong++;
 		}
 	}
-	for (int i = 0; i < int(ha.size()); i++) {
-		if (guy[i] != ha[i]) {
-			away++;
-		}
+	while (par != begin) {
+		cout << "shiiiiiit" << endl;
+		par = parents[par];
+		away++;
 	}
 	return (away+wrong)*(int(end.size()) + 1) + wrong;
 }
@@ -194,7 +194,7 @@ int main (int argc, char* argv[]) {
 		vector<string> neighbor = get_cousins(temp, terms, closedlist);
 		for (int i = 0; i < int(neighbor.size()); i++) {
 			
-			int prio = get_priority(neighbor[i], begin, end);
+			int prio = get_priority(neighbor[i], begin, end, backtrack, temp);
 			cout << neighbor[i] << "    " << prio << endl;
 			if (std::find(added.begin(), added.end(), neighbor[i]) == added.end()) {
 				//cout << "so the real ones  " <<neighbor[i] << "    " << prio << endl;
