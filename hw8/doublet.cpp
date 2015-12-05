@@ -72,6 +72,7 @@ void converting(string look, string end, string terms[], MinHeap &store, int pri
 */
 
 vector<string> get_cousins(string start, vector<string> terms, vector<string> check) {
+	//cout << "damn to hell" << endl;
 	vector<string> answers;
 	for (int i = 0; i < int(terms.size()); i++) {
 		int wrong = 0;
@@ -79,14 +80,18 @@ vector<string> get_cousins(string start, vector<string> terms, vector<string> ch
 			wrong = 2;
 		}
 		else {
+			//cout << terms[i] << endl; 
 			for (int j = 0; j < int(terms[i].size()); j++) {
 				if (start[j] != terms[i][j]) {
 					wrong++;
 				}
 			}
 		}
-		if (wrong == 1 && std::find(check.begin(), check.end(), terms[i]) != check.end()) {
+		//cout << terms[i] << "  " << wrong << endl;
+		if (wrong == 1 && std::find(check.begin(), check.end(), terms[i]) == check.end()) {
+			//cout << terms[i] << endl;
 			answers.push_back(terms[i]);
+			
 		}
 	}
 	return answers;
@@ -133,7 +138,7 @@ int main (int argc, char* argv[]) {
 	string temp;
 	for (int i = 0; i < size; i++) {
 		file >> temp;
-		for (int j = 0; j < int(temp.size()); i++) {
+		for (int j = 0; j < int(temp.size()); j++) {
 			if (temp[j] < 90) {
 				temp[j] = temp[j] + 32;
 			}
@@ -145,11 +150,14 @@ int main (int argc, char* argv[]) {
 	vector<string> closedlist;
 	int priority = wrong*(begin.size() + 1) + wrong;
 	openlist.add(begin, priority);
+	temp.clear();
 	map<string,string> backtrack;
 	//string temp;
 	int step = 0;
 	int expansion = 1;
+	//cout << openlist.isEmpty() << endl;
 	while (!openlist.isEmpty()) {
+
 		step++;
 		temp = openlist.peek();
 		closedlist.push_back(temp);
@@ -171,6 +179,7 @@ int main (int argc, char* argv[]) {
 
 	string temps = end;
 	while (temps != begin) {
+		//cout << "crap"<< endl;
 		final.push_back(temps);
 		temps = backtrack[temps];
 	}

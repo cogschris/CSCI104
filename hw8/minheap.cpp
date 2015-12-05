@@ -28,25 +28,27 @@ void MinHeap::add(std::string item, int priority) {
 }
 
 void MinHeap::trickleUp (int pos) {
+	
 	if (pos > 0 && heap[pos].second < heap[(pos-1)/tree].second) {
 		swap (pos, (pos-1)/tree);
 		track.update(std::make_pair(heap[(pos-1)/tree].first, (pos-1)/tree));
-		track.update(std::make_pair(heap[pos].first, (pos-1)/tree));
+		track.update(std::make_pair(heap[pos].first, (pos)));
 		trickleUp((pos-1)/tree);
 	}
 	else if (pos > 0 && heap[pos].second == heap[(pos-1)/tree].second) {
-		if (heap[pos].first > heap[(pos-1)/tree].first) {
+		if (heap[pos].first < heap[(pos-1)/tree].first) {
 			swap (pos, (pos-1)/tree);
 			track.update(std::make_pair(heap[(pos-1)/tree].first, (pos-1)/tree));
-			track.update(std::make_pair(heap[pos].first, (pos-1)/tree));
+			track.update(std::make_pair(heap[pos].first, (pos)));
 		}
 	}
+	
 }
 
 
 const std::string & MinHeap::peek() const {
 	if (size == 0) {
-		//throw exception
+		throw 0;
 	}
 
 	return heap[0].first;
@@ -60,6 +62,7 @@ const std::string & MinHeap::peek() const {
  }
 
  void MinHeap::trickleDown(int pos) {
+ 	std::cout << "damn" << std::endl;
  	if (tree*pos + 1 < size) {
  		int compare = heap[pos].second;
  		for (int i = 1; i <= tree; i++) {
