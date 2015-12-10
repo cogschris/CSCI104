@@ -83,6 +83,43 @@ class BinarySearchTree {
   /**
    * Constructor
    */
+   void insert(const std::pair<KeyType, ValueType> &keyValuePair)
+{
+  insertHelper(keyValuePair, root);
+}
+void insertHelper(const std::pair<KeyType, ValueType> &keyValuePair, Node<KeyType, ValueType> *root)
+{
+  if(root == NULL)
+  {
+    this->root = new Node<KeyType, ValueType>(keyValuePair.first, keyValuePair.second, NULL);
+  }
+  else if(root->getKey() < keyValuePair.first)
+  {
+    if(root->getRight() != NULL)
+    {
+      insertHelper(keyValuePair, root->getRight());
+    }
+    else
+    {
+      root->setRight(new Node<KeyType, ValueType>(keyValuePair.first, keyValuePair.second, root));
+    }
+  }
+  else if(root->getKey() > keyValuePair.first)
+  {
+    if(root->getLeft() != NULL)
+    {
+      insertHelper(keyValuePair, root->getLeft());
+    }
+    else
+    {
+      root->setLeft(new Node<KeyType, ValueType>(keyValuePair.first, keyValuePair.second, root));
+    }
+  }
+  else
+  {
+    root->setValue(keyValuePair.second);
+  }
+}
   BinarySearchTree () { root = NULL; }
   /*void insert(const std::pair<const KeyType, ValueType> new_item) {
   this->root = insertInTree(NULL, this->root, new_item);
@@ -177,8 +214,8 @@ class BinarySearchTree {
     iterator& operator++() {
     	Node<KeyType, ValueType> *temp;
     	temp = curr;
-    	
-    	while (temp->getKey() >= curr->getKey()) {
+    	bool bam = false;
+    	while (temp->getKey() >= curr->getKey() && (bam == false)) {
     	
     		bool move = false;
     		while (((curr->getRight() != NULL) || (curr->getLeft() != NULL)) && ((temp->getKey() > curr->getRight()->getKey()) || temp->getKey() > curr->getLeft()->getKey())) {
@@ -191,7 +228,12 @@ class BinarySearchTree {
     			}
     		}
     		if(move == false) {
-    			curr = curr->getParent();
+          if (curr->getParent() != NULL) {
+    			 curr = curr->getParent();
+          }
+          else {
+            bam = true;
+          }
     		}
     	}
     	
@@ -211,7 +253,7 @@ class BinarySearchTree {
   	Node<KeyType, ValueType> *cool;
   	
   	cool = root;
-  	if (cool = NULL){
+  	if (cool == NULL){
   		return iterator(cool);
   	}
   	while(cool->getLeft() != NULL) {
